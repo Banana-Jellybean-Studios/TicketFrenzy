@@ -7,6 +7,7 @@ public class Manager : MonoBehaviour
 {
     public GameObject pathObject;
     public GameObject prefab;
+    public float flowSpeed = 1;
     public float distance = 0;
 	public float distanceTickets = 0.5f;
 
@@ -33,4 +34,9 @@ public class Manager : MonoBehaviour
 			spawnedTickets[i].transform.rotation = path.GetRotationAtDistance(distance + i * distanceTickets);
 		}
     }
+
+    private void FixedUpdate()
+	{
+		distance += flowSpeed * Time.deltaTime;
+	}
 }
