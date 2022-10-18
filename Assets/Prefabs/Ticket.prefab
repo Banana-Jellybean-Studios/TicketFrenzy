@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8480776978040283057}
   - component: {fileID: 4764278644047204372}
   - component: {fileID: 7348442369919362270}
+  - component: {fileID: 741399461467750186}
+  - component: {fileID: 4940628361030015728}
   m_Layer: 0
   m_Name: Ticket
   m_TagString: Untagged
@@ -61,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 05d1d38fda6ccba4197f0216ea150853, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +85,29 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &741399461467750186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9149648780978980107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPrototype: {fileID: 11400000, guid: 5a14b6a76b9f7364a9abf76a513b916d, type: 2}
+--- !u!114 &4940628361030015728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9149648780978980107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af364fdba3900e7439da4d2db3e16fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gpuiPrefab: {fileID: 0}
