@@ -1245,7 +1245,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 6
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0
     vertexPathMinVertexSpacing: 1
     showTransformTool: 1
@@ -1282,7 +1282,7 @@ MonoBehaviour:
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
   flowSpeed: 5
   distance: 0
-  distanceTickets: 1.97
+  distanceTickets: 1
 --- !u!1 &8723596771843330728
 GameObject:
   m_ObjectHideFlags: 0
