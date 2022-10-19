@@ -3,15 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
-    [Header("Stats")]
+	[Header("Ticket Machine")]
+	public GameObject ticketMachine;
+	public float scaleXTarget = 1.1f;
+	public float scaleYTarget = 1.1f;
+	public float scaleZTarget = 1.1f;
+	public float scaleDuration = 0.3f;
+
+	private bool canScaleChange = true;
+
+	[Header("Stats")]
     public float money = 0;
     public int staminaLevel = 0;
 	public int incomeLevel = 0;
 	public int slotCount = 1;
 	public float staminaRefullSpeed = 1;
+
+	[HideInInspector] public bool canTouch = true;
 
     private float currentMaxStamina = 0;
 	private float currentStamina = 0;
@@ -32,8 +44,7 @@ public class Player : MonoBehaviour
 
 	[Header("Ticket Paths")]
     public List<TicketFlow> ticketPaths;
-    public float normalFlowSpeed = 2;
-	public float fastFlowSpeed = 5;
+	public float flowSpeed = 5;
 
     [Header("UI")]
     public TextMeshProUGUI moneyText;
@@ -62,31 +73,55 @@ public class Player : MonoBehaviour
 
 		CheckLevels();
         CheckSlots();
+
+		currentStamina = 0;
 	}
 
     private void Update()
     {
-        if (Input.touchCount != 0 && currentStamina > 0)
+        if (Input.touchCount != 0 && canTouch)
         {
-            for (int i = 0; i < ticketPaths.Count; i++)
+			if (currentStamina < currentMaxStamina)
+			{
+				currentStamina += staminaRefullSpeed * Time.deltaTime;
+			}
+			else if(currentStamina >= currentMaxStamina)
+			{
+				canTouch = false;
+			}
+
+			for (int i = 0; i < ticketPaths.Count; i++)
             {
-                ticketPaths[i].flowSpeed = fastFlowSpeed;
+                ticketPaths[i].flowSpeed = flowSpeed;
             }
         }
         else if (Input.touchCount == 0)
         {
-			if (currentStamina < currentMaxStamina) currentStamina += staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+			if (currentStamina < currentMaxStamina * 0.6f)
+			{
+				canTouch = true;
+			}
+
+			if (currentStamina > 0)
+			{
+				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+			}
 
 			for (int i = 0; i < ticketPaths.Count; i++)
 			{
-				ticketPaths[i].flowSpeed = normalFlowSpeed;
+				ticketPaths[i].flowSpeed = 0;
 			}
 		}
 		else
 		{
+			if (currentStamina > 0)
+			{
+				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+			}
+
 			for (int i = 0; i < ticketPaths.Count; i++)
 			{
-				ticketPaths[i].flowSpeed = normalFlowSpeed;
+				ticketPaths[i].flowSpeed = 0;
 			}
 		}
 
@@ -97,7 +132,25 @@ public class Player : MonoBehaviour
     public void OnTicketInMachine()
     {
         money += currentMoneyIncrease;
-    }
+
+		if (canScaleChange)
+		{
+			ticketMachine.transform.DOScaleX(scaleXTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+			ticketMachine.transform.DOScaleY(scaleYTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+			ticketMachine.transform.DOScaleZ(scaleZTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+
+			StartCoroutine(ScaleBlock());
+		}
+	}
+
+	private IEnumerator ScaleBlock()
+	{
+		canScaleChange = false;
+
+		yield return new WaitForSeconds(scaleDuration + 0.05f);
+
+		canScaleChange = true;
+	}
 
 	private void CheckLevels()
     {
