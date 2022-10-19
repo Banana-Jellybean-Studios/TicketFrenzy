@@ -370,8 +370,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9.7403}
-  m_SizeDelta: {x: 241.3974, y: 950.5115}
+  m_AnchoredPosition: {x: 0, y: -3.1462}
+  m_SizeDelta: {x: 241.3974, y: 924.7383}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &113313007
 MonoBehaviour:
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   staminaLevelText: {fileID: 811118822}
   incomeaLevelText: {fileID: 66997540}
   slotCountText: {fileID: 1709944195}
-  staminaSlider: {fileID: 0}
+  staminaSlider: {fileID: 539076376}
 --- !u!1 &667744857
 GameObject:
   m_ObjectHideFlags: 0
@@ -5257,7 +5257,7 @@ RectTransform:
   m_AnchorMin: {x: 0.25, y: 0}
   m_AnchorMax: {x: 0.75, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 68.0129, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2125699733
 MonoBehaviour:
@@ -5288,7 +5288,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.05
 --- !u!222 &2125699734
 CanvasRenderer:
   m_ObjectHideFlags: 0
