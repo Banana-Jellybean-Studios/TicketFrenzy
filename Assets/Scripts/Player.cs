@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,12 +11,13 @@ public class Player : MonoBehaviour
     public int staminaLevel = 0;
 	public int incomeLevel = 0;
 	public int slotCount = 1;
+	public float staminaRefullSpeed = 1;
 
     private float currentMaxStamina = 0;
 	private float currentStamina = 0;
     private float currentMoneyIncrease = 1;
 
-    [Header("Increase Counts")]
+    [Header("Level Increase Counts")]
     public float staminaIncreaseByLevel = 50;
 	public float incomeIncreaseByLevel = 0.5f;
 
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
 	public TextMeshProUGUI staminaLevelText;
 	public TextMeshProUGUI incomeaLevelText;
 	public TextMeshProUGUI slotCountText;
+	public Slider staminaSlider;
 
 	public static Player player { get; private set; }
 
@@ -63,15 +66,24 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount != 0)
+        if (Input.touchCount != 0 && currentStamina > 0)
         {
             for (int i = 0; i < ticketPaths.Count; i++)
             {
                 ticketPaths[i].flowSpeed = fastFlowSpeed;
             }
         }
-        else
+        else if (Input.touchCount == 0)
         {
+			if (currentStamina < currentMaxStamina) currentStamina += staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+
+			for (int i = 0; i < ticketPaths.Count; i++)
+			{
+				ticketPaths[i].flowSpeed = normalFlowSpeed;
+			}
+		}
+		else
+		{
 			for (int i = 0; i < ticketPaths.Count; i++)
 			{
 				ticketPaths[i].flowSpeed = normalFlowSpeed;
@@ -79,6 +91,7 @@ public class Player : MonoBehaviour
 		}
 
         moneyText.text = money.ToString();
+		staminaSlider.value = currentStamina / currentMaxStamina;
 	}
 
     public void OnTicketInMachine()
