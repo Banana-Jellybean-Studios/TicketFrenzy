@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
 	public int incomeLevel = 0;
 	public int slotCount = 1;
 
-    private float currentStamina = 0;
+    private float currentMaxStamina = 0;
+	private float currentStamina = 0;
     private float currentMoneyIncrease = 1;
 
     [Header("Increase Counts")]
@@ -87,7 +88,7 @@ public class Player : MonoBehaviour
 
 	private void CheckLevels()
     {
-        currentStamina = staminaLevel * staminaIncreaseByLevel + staminaIncreaseByLevel;
+		currentMaxStamina = staminaLevel * staminaIncreaseByLevel + staminaIncreaseByLevel;
         currentMoneyIncrease = incomeLevel * incomeIncreaseByLevel + incomeIncreaseByLevel;
 
         currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
