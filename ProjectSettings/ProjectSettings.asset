@@ -694,7 +694,9 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Android: GPU_INSTANCER
+    Standalone: GPU_INSTANCER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
