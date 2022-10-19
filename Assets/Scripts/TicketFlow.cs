@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TicketFlow : MonoBehaviour
 {
+	public bool isFlowing = false;
 	public GameObject prefab;
 	public float flowSpeed = 1;
 	public float distance = 0;
@@ -29,11 +30,12 @@ public class TicketFlow : MonoBehaviour
             GameObject spawned = Instantiate(prefab, path.GetPointAtDistance(distance + i), path.GetRotationAtDistance(distance + i));
             spawnedTickets.Add(spawned);
         }
-
 	}
 
 	private void Update()
 	{
+		if (!isFlowing) return;
+
 		for (int i = 0; i < spawnedTickets.Count; i++)
 		{
 			spawnedTickets[i].transform.position = path.GetPointAtDistance(distance + i * distanceTickets);
@@ -43,6 +45,8 @@ public class TicketFlow : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (!isFlowing) return;
+
 		distance += flowSpeed * Time.deltaTime;
 		ticketInMachineDistance += flowSpeed * Time.deltaTime;
 
