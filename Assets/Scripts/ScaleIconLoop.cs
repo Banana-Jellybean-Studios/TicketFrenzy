@@ -15,6 +15,6 @@ public class ScaleIconLoop : MonoBehaviour
         Application.targetFrameRate = 500;
         transform.DOScaleX(targetScale * transform.localScale.x, duration).SetEase(ease).SetLoops(-1, loopType);
 		transform.DOScaleY(targetScale * transform.localScale.y, duration).SetEase(ease).SetLoops(-1, loopType);
-		transform.DOScaleY(targetScale * transform.localScale.z, duration).SetEase(ease).SetLoops(-1, loopType);
+		transform.DOScaleZ(targetScale * transform.localScale.z, duration).SetEase(ease).SetLoops(-1, loopType);
 	}
 }
