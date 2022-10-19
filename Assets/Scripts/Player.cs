@@ -34,8 +34,14 @@ public class Player : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI moneyText;
+	public TextMeshProUGUI staminaMoneyText;
+	public TextMeshProUGUI incomeMoneyText;
+	public TextMeshProUGUI slotMoneyText;
+	public TextMeshProUGUI staminaLevelText;
+	public TextMeshProUGUI incomeaLevelText;
+	public TextMeshProUGUI slotCountText;
 
-    public static Player player { get; private set; }
+	public static Player player { get; private set; }
 
     private void Awake()
     {
@@ -86,6 +92,14 @@ public class Player : MonoBehaviour
 
         currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
 		currentIncomeLevelMoney = (incomeLevel + 1) * incomeMoneyByLevel;
+
+		staminaLevelText.text = (staminaLevel + 1).ToString();
+		incomeaLevelText.text = (incomeLevel + 1).ToString();
+		slotCountText.text = (slotCount + 1).ToString();
+
+		staminaMoneyText.text = (currentStaminaLevelMoney).ToString();
+		incomeMoneyText.text = (currentIncomeLevelMoney).ToString();
+		slotMoneyText.text = (currentSlotMoney).ToString();
 	}
 
     private void CheckSlots()
@@ -101,6 +115,9 @@ public class Player : MonoBehaviour
 			ticketPaths[i].isFlowing = true;
 			ticketPaths[i].gameObject.SetActive(true);
 		}
+
+		slotCountText.text = (slotCount + 1).ToString();
+		slotMoneyText.text = (currentSlotMoney).ToString();
 	}
 
     public void BuyStaminaUpgrade()
