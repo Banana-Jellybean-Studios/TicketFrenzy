@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
 	[Header("Ticket Machine")]
 	public GameObject ticketMachine;
+	public GameObject staminaBar;
 	public float scaleXTarget = 1.1f;
 	public float scaleYTarget = 1.1f;
 	public float scaleZTarget = 1.1f;
@@ -27,6 +28,8 @@ public class Player : MonoBehaviour
 	public ParticleSystem moneyEffect;
 	public ParticleSystem ticketEffect;
 	public GameObject moneyEffectSpawnPos;
+	public ParticleSystem smokeEffect;
+	public ParticleSystem fireEffect;
 
 	[Header("Buttons")]
 	public List<ScaleButton> scaleButtons;
@@ -39,6 +42,7 @@ public class Player : MonoBehaviour
 	public float staminaRefullSpeed = 1;
 
 	[HideInInspector] public bool canTouch = true;
+	private bool isPlay = false;
 
     private float currentMaxStamina = 0;
 	private float currentStamina = 0;
@@ -96,7 +100,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount != 0 && canTouch)
+        if (Input.touchCount != 0 && canTouch && isPlay)
         {
 			if (currentStamina < currentMaxStamina)
 			{
@@ -105,6 +109,8 @@ public class Player : MonoBehaviour
 			else if(currentStamina >= currentMaxStamina)
 			{
 				canTouch = false;
+				isPlay = false;
+				Save();
 			}
 
 			for (int i = 0; i < ticketPaths.Count; i++)
@@ -132,6 +138,7 @@ public class Player : MonoBehaviour
 			}
 
 			OpenButtons();
+			isPlay = false;
 		}
 		else
 		{
@@ -146,10 +153,41 @@ public class Player : MonoBehaviour
 			}
 		}
 
-        moneyText.text = money.ToString();
+		if(!canTouch) OpenButtons();
+
+		MachineEffects();
+
+		moneyText.text = money.ToString();
 		staminaSlider.value = currentStamina / currentMaxStamina;
 		machineRenderer.material.color = Color.Lerp(normalColor, hotColor, staminaSlider.value);
 		scaleDuration = Mathf.Lerp(normalScaleDuration, hotScaleDuration, staminaSlider.value);
+		staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.6f);
+	}
+
+	public void PlayGame()
+	{
+		isPlay = true;
+	}
+
+	private void MachineEffects()
+	{ 
+		if (staminaSlider.value > 0.6f && smokeEffect.isStopped)
+		{
+			smokeEffect.Play();
+		}
+		else if (staminaSlider.value <= 0.6f && !smokeEffect.isStopped)
+		{
+			smokeEffect.Stop();
+		}
+
+		if (staminaSlider.value > 0.8f && fireEffect.isStopped)
+		{
+			fireEffect.Play();
+		}
+		else if (staminaSlider.value <= 0.8f && !fireEffect.isStopped)
+		{
+			fireEffect.Stop();
+		}
 	}
 
     public void OnTicketInMachine(Vector3 TicketEffectPos)
@@ -185,10 +223,11 @@ public class Player : MonoBehaviour
 
         currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
 		currentIncomeLevelMoney = (incomeLevel + 1) * incomeMoneyByLevel;
+		currentSlotMoney = (slotCount + 1) * slotMoneyByLevel;
 
 		staminaLevelText.text = (staminaLevel + 1).ToString();
 		incomeaLevelText.text = (incomeLevel + 1).ToString();
-		slotCountText.text = (slotCount + 1).ToString();
+		slotCountText.text = (slotCount).ToString();
 
 		staminaMoneyText.text = (currentStaminaLevelMoney).ToString();
 		incomeMoneyText.text = (currentIncomeLevelMoney).ToString();
@@ -196,20 +235,32 @@ public class Player : MonoBehaviour
 	}
 
     private void CheckSlots()
-    {
+	{
+		currentSlotMoney = (slotCount + 1) * slotMoneyByLevel;
+
 		for (int i = 0; i < ticketPaths.Count; i++)
 		{
 			ticketPaths[i].isFlowing = false;
 			ticketPaths[i].gameObject.SetActive(false);
+
+			for (int j = 0; j < ticketPaths[i].spawnedTickets.Count; j++)
+			{
+				ticketPaths[i].spawnedTickets[j].SetActive(false);
+			}
 		}
 
 		for (int i = 0; i < slotCount; i++)
 		{
 			ticketPaths[i].isFlowing = true;
 			ticketPaths[i].gameObject.SetActive(true);
+
+			for (int j = 0; j < ticketPaths[i].spawnedTickets.Count; j++)
+			{
+				ticketPaths[i].spawnedTickets[j].SetActive(true);
+			}
 		}
 
-		slotCountText.text = (slotCount + 1).ToString();
+		slotCountText.text = (slotCount).ToString();
 		slotMoneyText.text = (currentSlotMoney).ToString();
 	}
 
@@ -221,6 +272,7 @@ public class Player : MonoBehaviour
             money -= currentStaminaLevelMoney;
             CheckLevels();
         }
+		Save();
     }
 
 	public void BuyIncomeUpgrade()
@@ -231,6 +283,7 @@ public class Player : MonoBehaviour
 			money -= currentIncomeLevelMoney;
 			CheckLevels();
 		}
+		Save();
 	}
 
 	public void BuySlotUpgrade()
@@ -241,6 +294,7 @@ public class Player : MonoBehaviour
 			money -= currentSlotMoney;
 			CheckSlots();
 		}
+		Save();
 	}
 
 	private void OpenButtons()

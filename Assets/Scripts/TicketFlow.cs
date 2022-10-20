@@ -13,7 +13,7 @@ public class TicketFlow : MonoBehaviour
 	public float distance = 0;
 	public float distanceTickets = 0.5f;
 
-	private List<GameObject> spawnedTickets;
+	[HideInInspector] public List<GameObject> spawnedTickets;
 	private VertexPath path;
 	private Player player;
 	private float ticketInMachineDistance;
