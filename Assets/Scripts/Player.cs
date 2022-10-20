@@ -16,6 +16,13 @@ public class Player : MonoBehaviour
 
 	private bool canScaleChange = true;
 
+	[Header("Effects")]
+	public ParticleSystem moneyEffect;
+	public GameObject moneyEffectSpawnPos;
+
+	[Header("Buttons")]
+	public List<ScaleButton> scaleButtons;
+
 	[Header("Stats")]
     public float money = 0;
     public int staminaLevel = 0;
@@ -94,6 +101,8 @@ public class Player : MonoBehaviour
             {
                 ticketPaths[i].flowSpeed = flowSpeed;
             }
+
+			CloseButtons();
         }
         else if (Input.touchCount == 0)
         {
@@ -111,6 +120,8 @@ public class Player : MonoBehaviour
 			{
 				ticketPaths[i].flowSpeed = 0;
 			}
+
+			OpenButtons();
 		}
 		else
 		{
@@ -132,6 +143,8 @@ public class Player : MonoBehaviour
     public void OnTicketInMachine()
     {
         money += currentMoneyIncrease;
+
+		Instantiate(moneyEffect, moneyEffectSpawnPos.transform.position, Quaternion.identity);
 
 		if (canScaleChange)
 		{
@@ -214,6 +227,22 @@ public class Player : MonoBehaviour
 			slotCount++;
 			money -= currentSlotMoney;
 			CheckSlots();
+		}
+	}
+
+	private void OpenButtons()
+	{
+		for (int i = 0; i < scaleButtons.Count; i++)
+		{
+			scaleButtons[i].isOpen = true;
+		}
+	}
+
+	private void CloseButtons()
+	{
+		for (int i = 0; i < scaleButtons.Count; i++)
+		{
+			scaleButtons[i].isOpen = false;
 		}
 	}
 
