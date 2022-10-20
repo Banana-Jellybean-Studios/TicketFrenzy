@@ -12,12 +12,20 @@ public class Player : MonoBehaviour
 	public float scaleXTarget = 1.1f;
 	public float scaleYTarget = 1.1f;
 	public float scaleZTarget = 1.1f;
-	public float scaleDuration = 0.3f;
+	public float normalScaleDuration = 0.25f;
+	public float hotScaleDuration = 0.1f;
 
+	[Space]
+	public Color normalColor;
+	public Color hotColor;
+
+	private float scaleDuration = 0.1f;
 	private bool canScaleChange = true;
+	private MeshRenderer machineRenderer;
 
 	[Header("Effects")]
 	public ParticleSystem moneyEffect;
+	public ParticleSystem ticketEffect;
 	public GameObject moneyEffectSpawnPos;
 
 	[Header("Buttons")]
@@ -68,6 +76,8 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         if(player == null) player = this;
+
+		machineRenderer = ticketMachine.GetComponent<MeshRenderer>();
     }
 
     private void Start()
@@ -138,13 +148,16 @@ public class Player : MonoBehaviour
 
         moneyText.text = money.ToString();
 		staminaSlider.value = currentStamina / currentMaxStamina;
+		machineRenderer.material.color = Color.Lerp(normalColor, hotColor, staminaSlider.value);
+		scaleDuration = Mathf.Lerp(normalScaleDuration, hotScaleDuration, staminaSlider.value);
 	}
 
-    public void OnTicketInMachine()
+    public void OnTicketInMachine(Vector3 TicketEffectPos)
     {
         money += currentMoneyIncrease;
 
 		Instantiate(moneyEffect, moneyEffectSpawnPos.transform.position, Quaternion.identity);
+		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
 		if (canScaleChange)
 		{

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.24305153, g: 0.31102178, b: 1.5868881, a: 1}
+  m_IndirectSpecularColor: {r: 0.15170889, g: 0.12722862, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -851,6 +851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  ticketEffectSpawnPos: {fileID: 0}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
@@ -2766,8 +2767,11 @@ MonoBehaviour:
   scaleYTarget: 1.05
   scaleZTarget: 1.2
   scaleDuration: 0.2
+  normalColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 0}
+  hotColor: {r: 0.7735849, g: 0, b: 0, a: 0}
   moneyEffect: {fileID: 8899972481808018480, guid: a0eaaaf9ef6397e44a8a0a090ec9749b,
     type: 3}
+  ticketEffect: {fileID: 0}
   moneyEffectSpawnPos: {fileID: 547491998}
   scaleButtons:
   - {fileID: 1926875087}
@@ -5152,6 +5156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  ticketEffectSpawnPos: {fileID: 0}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
@@ -5375,6 +5380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  ticketEffectSpawnPos: {fileID: 0}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
