@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.15170889, g: 0.12722862, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.24305153, g: 0.31102178, b: 1.5868881, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11766234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11766235}
+  m_Layer: 0
+  m_Name: TicketEffectSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11766235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11766234}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.21, y: 1.043, z: 0.494}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1390784170}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &66997538
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +788,7 @@ Transform:
   m_Children:
   - {fileID: 107572965}
   - {fileID: 736104280}
+  - {fileID: 1156972300}
   m_Father: {fileID: 5017030185332991622}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -851,7 +883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
-  ticketEffectSpawnPos: {fileID: 0}
+  ticketEffectSpawnPos: {fileID: 1156972299}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
@@ -2766,12 +2798,14 @@ MonoBehaviour:
   scaleXTarget: 1.05
   scaleYTarget: 1.05
   scaleZTarget: 1.2
-  scaleDuration: 0.2
+  normalScaleDuration: 0.25
+  hotScaleDuration: 0.1
   normalColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 0}
   hotColor: {r: 0.7735849, g: 0, b: 0, a: 0}
   moneyEffect: {fileID: 8899972481808018480, guid: a0eaaaf9ef6397e44a8a0a090ec9749b,
     type: 3}
-  ticketEffect: {fileID: 0}
+  ticketEffect: {fileID: 8142865112514183634, guid: faebc84fbf788be4594a7d2416bc47f1,
+    type: 3}
   moneyEffectSpawnPos: {fileID: 547491998}
   scaleButtons:
   - {fileID: 1926875087}
@@ -2801,6 +2835,37 @@ MonoBehaviour:
   incomeaLevelText: {fileID: 66997540}
   slotCountText: {fileID: 1709944195}
   staminaSlider: {fileID: 539076376}
+--- !u!1 &601114146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 601114147}
+  m_Layer: 0
+  m_Name: TicketEffectSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &601114147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601114146}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.31, y: 1.059, z: 0.499}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427994768}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &667744857
 GameObject:
   m_ObjectHideFlags: 0
@@ -4467,6 +4532,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148045581}
   m_CullTransparentMesh: 1
+--- !u!1 &1156972299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1156972300}
+  m_Layer: 0
+  m_Name: TicketEffectSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1156972300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156972299}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.21, y: 1.03, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 141849352}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1175759507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5156,7 +5252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
-  ticketEffectSpawnPos: {fileID: 0}
+  ticketEffectSpawnPos: {fileID: 11766234}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
@@ -5251,6 +5347,7 @@ Transform:
   m_Children:
   - {fileID: 1990961025}
   - {fileID: 304973232}
+  - {fileID: 11766235}
   m_Father: {fileID: 5017030185332991622}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5363,6 +5460,7 @@ Transform:
   m_Children:
   - {fileID: 4281138539103235003}
   - {fileID: 1364661007}
+  - {fileID: 601114147}
   m_Father: {fileID: 5017030185332991622}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5380,7 +5478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
-  ticketEffectSpawnPos: {fileID: 0}
+  ticketEffectSpawnPos: {fileID: 601114146}
   flowSpeed: 5
   distance: 0
   distanceTickets: 4
