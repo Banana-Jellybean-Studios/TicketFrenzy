@@ -4,10 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
+	public CinemachineTargetGroup targetGroup;
+
 	[Header("Ticket Machine")]
+	public List<GameObject> pathMouths;
 	public GameObject ticketMachine;
 	public GameObject staminaBar;
 	public float scaleXTarget = 1.1f;
@@ -19,6 +23,7 @@ public class Player : MonoBehaviour
 	[Space]
 	public Color normalColor;
 	public Color hotColor;
+	public float colorChangeSpeed = 5;
 
 	private float scaleDuration = 0.1f;
 	private bool canScaleChange = true;
@@ -104,7 +109,7 @@ public class Player : MonoBehaviour
         {
 			if (currentStamina < currentMaxStamina)
 			{
-				currentStamina += staminaRefullSpeed * Time.deltaTime;
+				currentStamina += (staminaRefullSpeed / (currentMaxStamina / 100)) * Time.deltaTime;
 			}
 			else if(currentStamina >= currentMaxStamina)
 			{
@@ -129,7 +134,7 @@ public class Player : MonoBehaviour
 
 			if (currentStamina > 0)
 			{
-				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+				currentStamina -= staminaRefullSpeed * Time.deltaTime;
 			}
 
 			for (int i = 0; i < ticketPaths.Count; i++)
@@ -144,7 +149,7 @@ public class Player : MonoBehaviour
 		{
 			if (currentStamina > 0)
 			{
-				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
+				currentStamina -= staminaRefullSpeed * Time.deltaTime;
 			}
 
 			for (int i = 0; i < ticketPaths.Count; i++)
@@ -159,9 +164,11 @@ public class Player : MonoBehaviour
 
 		moneyText.text = money.ToString();
 		staminaSlider.value = currentStamina / currentMaxStamina;
-		machineRenderer.material.color = Color.Lerp(normalColor, hotColor, staminaSlider.value);
+		machineRenderer.material.color = Color.Lerp(machineRenderer.material.color, Color.Lerp(normalColor, hotColor, staminaSlider.value), colorChangeSpeed * Time.deltaTime);
 		scaleDuration = Mathf.Lerp(normalScaleDuration, hotScaleDuration, staminaSlider.value);
-		staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.6f);
+		staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.525f);
+		targetGroup.m_Targets[0].weight = 1 - staminaSlider.value;
+		targetGroup.m_Targets[1].weight = staminaSlider.value;
 	}
 
 	public void PlayGame()
@@ -171,11 +178,11 @@ public class Player : MonoBehaviour
 
 	private void MachineEffects()
 	{ 
-		if (staminaSlider.value > 0.6f && smokeEffect.isStopped)
+		if (staminaSlider.value > 0.4f && smokeEffect.isStopped)
 		{
 			smokeEffect.Play();
 		}
-		else if (staminaSlider.value <= 0.6f && !smokeEffect.isStopped)
+		else if (staminaSlider.value <= 0.4f && !smokeEffect.isStopped)
 		{
 			smokeEffect.Stop();
 		}
@@ -211,14 +218,14 @@ public class Player : MonoBehaviour
 	{
 		canScaleChange = false;
 
-		yield return new WaitForSeconds(scaleDuration + 0.05f);
+		yield return new WaitForSeconds(scaleDuration * 2 + 0.05f);
 
 		canScaleChange = true;
 	}
 
 	private void CheckLevels()
     {
-		currentMaxStamina = staminaLevel * staminaIncreaseByLevel + staminaIncreaseByLevel;
+		currentMaxStamina = staminaLevel * staminaIncreaseByLevel + staminaIncreaseByLevel * 10;
         currentMoneyIncrease = incomeLevel * incomeIncreaseByLevel + incomeIncreaseByLevel;
 
         currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
@@ -249,6 +256,11 @@ public class Player : MonoBehaviour
 			}
 		}
 
+		for (int i = 0; i < pathMouths.Count; i++)
+		{
+			pathMouths[i].SetActive(false);
+		}
+
 		for (int i = 0; i < slotCount; i++)
 		{
 			ticketPaths[i].isFlowing = true;
@@ -258,6 +270,11 @@ public class Player : MonoBehaviour
 			{
 				ticketPaths[i].spawnedTickets[j].SetActive(true);
 			}
+		}
+
+		for (int i = 0; i < slotCount; i++)
+		{
+			pathMouths[i].SetActive(true);
 		}
 
 		slotCountText.text = (slotCount).ToString();
