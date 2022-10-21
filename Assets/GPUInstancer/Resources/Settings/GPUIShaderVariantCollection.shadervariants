@@ -19,3 +19,5 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+      - keywords: _ALPHABLEND_ON
+        passType: 0
