@@ -9,6 +9,7 @@ public class TicketFlow : MonoBehaviour
 	public bool isFlowing = false;
 	public GameObject prefab;
 	public GameObject ticketEffectSpawnPos;
+	public GameObject ticketsParentObj;
 	public float flowSpeed = 1;
 	public float distance = 0;
 	public float distanceTickets = 0.5f;
@@ -28,7 +29,7 @@ public class TicketFlow : MonoBehaviour
 
 		for (float i = 0; i < path.length - distanceTickets; i += distanceTickets)
         {
-            GameObject spawned = Instantiate(prefab, path.GetPointAtDistance(distance + i), path.GetRotationAtDistance(distance + i));
+            GameObject spawned = Instantiate(prefab, path.GetPointAtDistance(distance + i), path.GetRotationAtDistance(distance + i), ticketsParentObj.transform);
             spawnedTickets.Add(spawned);
         }
 	}

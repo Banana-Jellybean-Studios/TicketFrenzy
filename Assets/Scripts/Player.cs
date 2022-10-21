@@ -5,15 +5,24 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using Cinemachine;
+using System;
 
 public class Player : MonoBehaviour
 {
+	[Serializable]
+	public struct TicketMachine
+	{
+		public GameObject ticketMachine;
+		public List<GameObject> pathMouths;
+		public GameObject staminaBar;
+		public int machineLevel;
+		public List<TicketFlow> ticketPaths;
+	}
+
 	public CinemachineTargetGroup targetGroup;
 
 	[Header("Ticket Machine")]
-	public List<GameObject> pathMouths;
-	public GameObject ticketMachine;
-	public GameObject staminaBar;
+	public List<TicketMachine> ticketMachines;
 	public float scaleXTarget = 1.1f;
 	public float scaleYTarget = 1.1f;
 	public float scaleZTarget = 1.1f;
@@ -27,7 +36,9 @@ public class Player : MonoBehaviour
 
 	private float scaleDuration = 0.1f;
 	private bool canScaleChange = true;
+	private TicketMachine currentMachine;
 	private MeshRenderer machineRenderer;
+	private GameObject currentstaminaBar;
 
 	[Header("Effects")]
 	public ParticleSystem moneyEffect;
@@ -43,7 +54,7 @@ public class Player : MonoBehaviour
     public float money = 0;
     public int staminaLevel = 0;
 	public int incomeLevel = 0;
-	public int slotCount = 1;
+	public int machineLevel = 0;
 	public float staminaRefullSpeed = 1;
 
 	[HideInInspector] public bool canTouch = true;
@@ -52,6 +63,7 @@ public class Player : MonoBehaviour
     private float currentMaxStamina = 0;
 	private float currentStamina = 0;
     private float currentMoneyIncrease = 1;
+	private int currentMachineLevel = 0;
 
     [Header("Level Increase Counts")]
     public float staminaIncreaseByLevel = 50;
@@ -60,45 +72,48 @@ public class Player : MonoBehaviour
 	[Header("Level Money Counts")]
 	public float staminaMoneyByLevel = 50;
 	public float incomeMoneyByLevel = 50;
-	public float slotMoneyByLevel = 50;
+	public float machineMoneyByLevel = 50;
 
 	private float currentStaminaLevelMoney = 50;
 	private float currentIncomeLevelMoney = 50;
-	private float currentSlotMoney = 50;
+	private float currentMachineMoney = 50;
 
 	[Header("Ticket Paths")]
-    public List<TicketFlow> ticketPaths;
 	public float flowSpeed = 5;
 
     [Header("UI")]
     public TextMeshProUGUI moneyText;
 	public TextMeshProUGUI staminaMoneyText;
 	public TextMeshProUGUI incomeMoneyText;
-	public TextMeshProUGUI slotMoneyText;
+	public TextMeshProUGUI machineMoneyText;
 	public TextMeshProUGUI staminaLevelText;
 	public TextMeshProUGUI incomeaLevelText;
-	public TextMeshProUGUI slotCountText;
+	public TextMeshProUGUI machineLevelText;
 	public Slider staminaSlider;
+	public Button machineButton;
 
 	public static Player player { get; private set; }
+
+	private bool IsMachineMaxLevel()
+	{
+		return ticketMachines[ticketMachines.Count - 1].machineLevel + ticketMachines[ticketMachines.Count - 1].ticketPaths.Count - 1 <= machineLevel;
+	}
 
     private void Awake()
     {
         if(player == null) player = this;
-
-		machineRenderer = ticketMachine.GetComponent<MeshRenderer>();
     }
 
     private void Start()
     {
 		staminaLevel = 0;
 		incomeLevel = 0;
-		slotCount = 1;
+		machineLevel = 0;
 
 		Load();
 
 		CheckLevels();
-        CheckSlots();
+		CheckMachine();
 
 		currentStamina = 0;
 	}
@@ -118,9 +133,9 @@ public class Player : MonoBehaviour
 				Save();
 			}
 
-			for (int i = 0; i < ticketPaths.Count; i++)
+			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
             {
-                ticketPaths[i].flowSpeed = flowSpeed;
+				currentMachine.ticketPaths[i].flowSpeed = flowSpeed;
             }
 
 			CloseButtons();
@@ -137,9 +152,9 @@ public class Player : MonoBehaviour
 				currentStamina -= staminaRefullSpeed * Time.deltaTime;
 			}
 
-			for (int i = 0; i < ticketPaths.Count; i++)
+			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
 			{
-				ticketPaths[i].flowSpeed = 0;
+				currentMachine.ticketPaths[i].flowSpeed = 0;
 			}
 
 			OpenButtons();
@@ -152,9 +167,9 @@ public class Player : MonoBehaviour
 				currentStamina -= staminaRefullSpeed * Time.deltaTime;
 			}
 
-			for (int i = 0; i < ticketPaths.Count; i++)
+			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
 			{
-				ticketPaths[i].flowSpeed = 0;
+				currentMachine.ticketPaths[i].flowSpeed = 0;
 			}
 		}
 
@@ -166,7 +181,7 @@ public class Player : MonoBehaviour
 		staminaSlider.value = currentStamina / currentMaxStamina;
 		machineRenderer.material.color = Color.Lerp(machineRenderer.material.color, Color.Lerp(normalColor, hotColor, staminaSlider.value), colorChangeSpeed * Time.deltaTime);
 		scaleDuration = Mathf.Lerp(normalScaleDuration, hotScaleDuration, staminaSlider.value);
-		staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.525f);
+		currentMachine.staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.525f);
 		targetGroup.m_Targets[0].weight = 1 - staminaSlider.value;
 		targetGroup.m_Targets[1].weight = staminaSlider.value;
 	}
@@ -178,11 +193,11 @@ public class Player : MonoBehaviour
 
 	private void MachineEffects()
 	{ 
-		if (staminaSlider.value > 0.4f && smokeEffect.isStopped)
+		if (staminaSlider.value > 0.55f && smokeEffect.isStopped)
 		{
 			smokeEffect.Play();
 		}
-		else if (staminaSlider.value <= 0.4f && !smokeEffect.isStopped)
+		else if (staminaSlider.value <= 0.55f && !smokeEffect.isStopped)
 		{
 			smokeEffect.Stop();
 		}
@@ -206,11 +221,97 @@ public class Player : MonoBehaviour
 
 		if (canScaleChange)
 		{
-			ticketMachine.transform.DOScaleX(scaleXTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
-			ticketMachine.transform.DOScaleY(scaleYTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
-			ticketMachine.transform.DOScaleZ(scaleZTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+			currentMachine.ticketMachine.transform.DOScaleX(scaleXTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+			currentMachine.ticketMachine.transform.DOScaleY(scaleYTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
+			currentMachine.ticketMachine.transform.DOScaleZ(scaleZTarget, scaleDuration).SetLoops(2, LoopType.Yoyo);
 
 			StartCoroutine(ScaleBlock());
+		}
+	}
+
+	private void CheckMachine()
+	{
+		currentMachineMoney = machineLevel * machineMoneyByLevel + machineMoneyByLevel;
+
+		for (int i = 0; i < ticketMachines.Count; i++)
+		{
+			if (machineLevel >= ticketMachines[i].machineLevel)
+			{
+				currentMachine = ticketMachines[i];
+			}
+			else break;
+		}
+
+		for (int i = 0; i < ticketMachines.Count; i++)
+		{
+			for (int k = 0; k < ticketMachines.Count; k++)
+			{
+				ticketMachines[i].ticketMachine.SetActive(false);
+
+				for (int j = 0; j < ticketMachines[k].ticketPaths.Count; j++)
+				{
+					ticketMachines[k].ticketPaths[j].isFlowing = false;
+					ticketMachines[k].ticketPaths[j].gameObject.SetActive(false);
+				}
+
+				for (int j = 0; j < ticketMachines[k].pathMouths.Count; j++)
+				{
+					ticketMachines[k].pathMouths[j].SetActive(false);
+				}
+			}
+		}
+
+		currentMachine.ticketMachine.SetActive(true);
+		CheckPaths();
+
+		machineRenderer = currentMachine.ticketMachine.GetComponent<MeshRenderer>();
+
+		machineLevelText.text = (machineLevel).ToString();
+		
+		if (IsMachineMaxLevel())
+		{
+			machineButton.interactable = false;
+			machineMoneyText.text = "Max";
+		}
+		else
+		{
+			machineButton.interactable = true;
+			machineMoneyText.text = (currentMachineMoney).ToString();
+		}
+	}
+
+	private void CheckPaths()
+	{
+		for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+		{
+			currentMachine.ticketPaths[i].isFlowing = false;
+			currentMachine.ticketPaths[i].gameObject.SetActive(false);
+
+			for (int j = 0; j < currentMachine.ticketPaths[i].spawnedTickets.Count; j++)
+			{
+				currentMachine.ticketPaths[i].spawnedTickets[j].SetActive(false);
+			}
+		}
+
+		for (int i = 0; i < currentMachine.pathMouths.Count; i++)
+		{
+			currentMachine.pathMouths[i].SetActive(false);
+		}
+
+		for (int i = 0; i < machineLevel - currentMachine.machineLevel + 1; i++)
+		{
+			currentMachine.ticketPaths[i].isFlowing = true;
+			currentMachine.ticketPaths[i].gameObject.SetActive(true);
+
+			for (int j = 0; j < currentMachine.ticketPaths[i].spawnedTickets.Count; j++)
+			{
+				currentMachine.ticketPaths[i].spawnedTickets[j].SetActive(true);
+			}
+		}
+
+		for (int i = 0; i < machineLevel - currentMachine.machineLevel + 1; i++)
+		{
+			currentMachine.pathMouths[i].SetActive(true);
 		}
 	}
 
@@ -230,55 +331,15 @@ public class Player : MonoBehaviour
 
         currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
 		currentIncomeLevelMoney = (incomeLevel + 1) * incomeMoneyByLevel;
-		currentSlotMoney = (slotCount + 1) * slotMoneyByLevel;
+		currentMachineMoney = (machineLevel + 1) * machineMoneyByLevel;
 
 		staminaLevelText.text = (staminaLevel + 1).ToString();
 		incomeaLevelText.text = (incomeLevel + 1).ToString();
-		slotCountText.text = (slotCount).ToString();
+		machineLevelText.text = (machineLevel + 1).ToString();
 
 		staminaMoneyText.text = (currentStaminaLevelMoney).ToString();
 		incomeMoneyText.text = (currentIncomeLevelMoney).ToString();
-		slotMoneyText.text = (currentSlotMoney).ToString();
-	}
-
-    private void CheckSlots()
-	{
-		currentSlotMoney = (slotCount + 1) * slotMoneyByLevel;
-
-		for (int i = 0; i < ticketPaths.Count; i++)
-		{
-			ticketPaths[i].isFlowing = false;
-			ticketPaths[i].gameObject.SetActive(false);
-
-			for (int j = 0; j < ticketPaths[i].spawnedTickets.Count; j++)
-			{
-				ticketPaths[i].spawnedTickets[j].SetActive(false);
-			}
-		}
-
-		for (int i = 0; i < pathMouths.Count; i++)
-		{
-			pathMouths[i].SetActive(false);
-		}
-
-		for (int i = 0; i < slotCount; i++)
-		{
-			ticketPaths[i].isFlowing = true;
-			ticketPaths[i].gameObject.SetActive(true);
-
-			for (int j = 0; j < ticketPaths[i].spawnedTickets.Count; j++)
-			{
-				ticketPaths[i].spawnedTickets[j].SetActive(true);
-			}
-		}
-
-		for (int i = 0; i < slotCount; i++)
-		{
-			pathMouths[i].SetActive(true);
-		}
-
-		slotCountText.text = (slotCount).ToString();
-		slotMoneyText.text = (currentSlotMoney).ToString();
+		machineMoneyText.text = (currentMachineMoney).ToString();
 	}
 
     public void BuyStaminaUpgrade()
@@ -303,13 +364,13 @@ public class Player : MonoBehaviour
 		Save();
 	}
 
-	public void BuySlotUpgrade()
+	public void BuyMachineUpgrade()
 	{
-		if (money >= currentSlotMoney)
+		if (money >= currentMachineMoney && !IsMachineMaxLevel())
 		{
-			slotCount++;
-			money -= currentSlotMoney;
-			CheckSlots();
+			machineLevel++;
+			money -= currentMachineMoney;
+			CheckMachine();
 		}
 		Save();
 	}
@@ -335,7 +396,7 @@ public class Player : MonoBehaviour
 		PlayerPrefs.SetFloat("Money", money);
 		PlayerPrefs.SetInt("StaminaLevel", staminaLevel);
 		PlayerPrefs.SetInt("IncomeLevel", incomeLevel);
-		PlayerPrefs.SetInt("SlotCount", slotCount);
+		PlayerPrefs.SetInt("MachineLevel", machineLevel);
 	}
 
 	public void Load()
@@ -343,7 +404,7 @@ public class Player : MonoBehaviour
 		if (PlayerPrefs.HasKey("Money")) money = PlayerPrefs.GetFloat("Money");
 		if (PlayerPrefs.HasKey("StaminaLevel")) staminaLevel = PlayerPrefs.GetInt("StaminaLevel");
 		if (PlayerPrefs.HasKey("IncomeLevel")) incomeLevel = PlayerPrefs.GetInt("IncomeLevel");
-		if (PlayerPrefs.HasKey("SlotCount")) slotCount = PlayerPrefs.GetInt("SlotCount");
+		if (PlayerPrefs.HasKey("MachineLevel")) machineLevel = PlayerPrefs.GetInt("MachineLevel");
 	}
 
 	[ContextMenu("Reset Save")]
