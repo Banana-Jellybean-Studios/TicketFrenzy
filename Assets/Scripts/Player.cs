@@ -216,10 +216,11 @@ public class Player : MonoBehaviour
 
     public void OnTicketInMachine(Vector3 TicketEffectPos, Vector3 moneyTextEffectPos)
     {
-        money += currentMachine.moneyIncrease;
+		float moneyAmount = currentMachine.moneyIncrease * currentMoneyIncrease;
+        money += moneyAmount;
 
 		Instantiate(moneyEffect, moneyEffectSpawnPos.transform.position, Quaternion.identity);
-		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.identity);
+		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "+" + moneyAmount.ToString();
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
 		if (canScaleChange)

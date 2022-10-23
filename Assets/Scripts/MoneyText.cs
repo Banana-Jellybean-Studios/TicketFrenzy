@@ -1,18 +1,17 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MoneyText : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float duration = 2;
+    public float moveY = 4;
+    public Ease ease;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.DOMoveY(transform.position.y + moveY, duration).SetEase(ease);
+        Destroy(gameObject, duration);
     }
 }

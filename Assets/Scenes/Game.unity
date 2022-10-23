@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.24305153, g: 0.31102178, b: 1.5868881, a: 1}
+  m_IndirectSpecularColor: {r: 0.15170889, g: 0.12722862, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2399,6 +2399,7 @@ Transform:
   m_Children:
   - {fileID: 1603922118}
   - {fileID: 797480495}
+  - {fileID: 1732665774}
   m_Father: {fileID: 667744859}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2497,6 +2498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 1732665773}
   ticketEffectSpawnPos: {fileID: 797480494}
   ticketsParentObj: {fileID: 1603922117}
   flowSpeed: 5
@@ -3532,6 +3534,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364558622}
   m_CullTransparentMesh: 1
+--- !u!1 &377003399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 377003400}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &377003400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 377003399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.88, y: 2.45, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 431663792}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &378729907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3798,6 +3831,7 @@ Transform:
   m_Children:
   - {fileID: 1052782090}
   - {fileID: 553538062}
+  - {fileID: 377003400}
   m_Father: {fileID: 667744859}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3815,6 +3849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 377003399}
   ticketEffectSpawnPos: {fileID: 553538061}
   ticketsParentObj: {fileID: 1052782089}
   flowSpeed: 5
@@ -4262,7 +4297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &518088872
 Transform:
   m_ObjectHideFlags: 0
@@ -4271,12 +4306,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518088871}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.6684813, y: 4.86, z: -3.04}
+  m_LocalPosition: {x: 1.2284813, y: 4.86, z: 2.3499997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 468149783}
   - {fileID: 1458750019}
+  - {fileID: 1560843835}
   m_Father: {fileID: 667744859}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4340,7 +4376,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 6
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0
     vertexPathMinVertexSpacing: 1
     showTransformTool: 1
@@ -4375,6 +4411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 1560843834}
   ticketEffectSpawnPos: {fileID: 1458750018}
   ticketsParentObj: {fileID: 468149782}
   flowSpeed: 5
@@ -4762,6 +4799,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+--- !u!1 &560550342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 560550343}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &560550343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560550342}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.88, y: 3.81, z: 0.49}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1717625584}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &561221847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5207,6 +5275,7 @@ MonoBehaviour:
     - {fileID: 107572964}
     staminaBar: {fileID: 919132147699769397}
     machineLevel: 0
+    moneyIncrease: 1
     ticketPaths:
     - {fileID: 1427994769}
     - {fileID: 431663793}
@@ -5218,6 +5287,7 @@ MonoBehaviour:
     - {fileID: 204698559}
     staminaBar: {fileID: 1154803871}
     machineLevel: 3
+    moneyIncrease: 1.5
     ticketPaths:
     - {fileID: 1198034258}
     - {fileID: 1717625586}
@@ -5229,6 +5299,7 @@ MonoBehaviour:
     - {fileID: 564271536}
     staminaBar: {fileID: 1836025750}
     machineLevel: 6
+    moneyIncrease: 2
     ticketPaths:
     - {fileID: 518088874}
     - {fileID: 1028564092}
@@ -5242,6 +5313,8 @@ MonoBehaviour:
   hotColor: {r: 1, g: 0.3066038, b: 0.3066038, a: 0}
   colorChangeSpeed: 5
   moneyEffect: {fileID: 8899972481808018480, guid: a0eaaaf9ef6397e44a8a0a090ec9749b,
+    type: 3}
+  moneyTextEffect: {fileID: 1782704633664477027, guid: 810d10178ef21c741af04909440d4f1d,
     type: 3}
   ticketEffect: {fileID: 8142865112514183634, guid: faebc84fbf788be4594a7d2416bc47f1,
     type: 3}
@@ -8989,7 +9062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1028564090
 Transform:
   m_ObjectHideFlags: 0
@@ -8998,12 +9071,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028564089}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.04, y: 4.73, z: 0.00999999}
+  m_LocalPosition: {x: 1.5999999, y: 4.73, z: 5.3999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2089244417}
   - {fileID: 5791709}
+  - {fileID: 2009182899}
   m_Father: {fileID: 667744859}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9067,7 +9141,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 6
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0
     vertexPathMinVertexSpacing: 1
     showTransformTool: 1
@@ -9102,6 +9176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 2009182898}
   ticketEffectSpawnPos: {fileID: 5791708}
   ticketsParentObj: {fileID: 2089244416}
   flowSpeed: 5
@@ -9938,6 +10013,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 227476510}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1122486143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1122486144}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1122486144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122486143}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.88, y: 3.26, z: 0.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1920991659}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1140866479
 GameObject:
   m_ObjectHideFlags: 0
@@ -10532,6 +10638,7 @@ Transform:
   m_Children:
   - {fileID: 2082137079}
   - {fileID: 217090504}
+  - {fileID: 1539781500}
   m_Father: {fileID: 667744859}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10630,6 +10737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 1539781499}
   ticketEffectSpawnPos: {fileID: 217090503}
   ticketsParentObj: {fileID: 2082137078}
   flowSpeed: 5
@@ -12533,6 +12641,7 @@ Transform:
   m_Children:
   - {fileID: 1364661007}
   - {fileID: 601114147}
+  - {fileID: 2104760816}
   m_Father: {fileID: 667744859}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12550,6 +12659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 2104760815}
   ticketEffectSpawnPos: {fileID: 601114146}
   ticketsParentObj: {fileID: 1364661006}
   flowSpeed: 5
@@ -13349,7 +13459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1533647652
 Transform:
   m_ObjectHideFlags: 0
@@ -13358,12 +13468,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533647651}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.04, y: 4.86, z: 3.3099997}
+  m_LocalPosition: {x: -0.39999962, y: 4.86, z: 8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 704664681}
   - {fileID: 1774131631}
+  - {fileID: 2110223815}
   m_Father: {fileID: 667744859}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13427,7 +13538,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 6
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0
     vertexPathMinVertexSpacing: 1
     showTransformTool: 1
@@ -13462,12 +13573,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 2110223814}
   ticketEffectSpawnPos: {fileID: 1774131630}
   ticketsParentObj: {fileID: 704664680}
   flowSpeed: 5
   distance: 0
   distanceTickets: 2.2
   spawnedTickets: []
+--- !u!1 &1539781499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1539781500}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1539781500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539781499}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.88, y: 3.22, z: 0.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1198034256}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1541801525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8480776978040283057, guid: b98a03d184456e545972e4927a1fe444,
@@ -13648,6 +13791,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+--- !u!1 &1560843834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1560843835}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1560843835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560843834}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.056963, y: 2.1, z: 0.62}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 518088872}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1561974409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8480776978040283057, guid: b98a03d184456e545972e4927a1fe444,
@@ -15102,6 +15276,7 @@ Transform:
   m_Children:
   - {fileID: 2083286860}
   - {fileID: 1494462435}
+  - {fileID: 560550343}
   m_Father: {fileID: 667744859}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15200,6 +15375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 560550342}
   ticketEffectSpawnPos: {fileID: 1494462434}
   ticketsParentObj: {fileID: 2083286859}
   flowSpeed: 5
@@ -15212,6 +15388,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 966472902}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1732665773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1732665774}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1732665774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732665773}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.29, y: 1.84, z: 0.72}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 227489219}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1753826055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8480776978040283057, guid: b98a03d184456e545972e4927a1fe444,
@@ -16336,6 +16543,7 @@ Transform:
   m_Children:
   - {fileID: 1114631007}
   - {fileID: 2136913006}
+  - {fileID: 1122486144}
   m_Father: {fileID: 667744859}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16353,6 +16561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFlowing: 0
   prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  moneyTextEffectSpawnPos: {fileID: 1122486143}
   ticketEffectSpawnPos: {fileID: 2136913005}
   ticketsParentObj: {fileID: 1114631006}
   flowSpeed: 5
@@ -16836,6 +17045,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1549530704}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2009182898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2009182899}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2009182899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009182898}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.4284816, y: 2.57, z: 0.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1028564090}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2026219915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17731,6 +17971,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+--- !u!1 &2104760815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104760816}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2104760816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104760815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.88, y: 1.54, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1427994768}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2110223814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2110223815}
+  m_Layer: 0
+  m_Name: MoneyTextSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2110223815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110223814}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.428482, y: 2.8, z: 0.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1533647652}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2111646176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8480776978040283057, guid: b98a03d184456e545972e4927a1fe444,
@@ -18774,7 +19076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5583398115932854638
 Transform:
   m_ObjectHideFlags: 0
@@ -18783,7 +19085,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5059767438761198548}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -11.71, y: -8.7519245, z: 0.99}
+  m_LocalPosition: {x: -16.150002, y: -8.7519245, z: 6.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
