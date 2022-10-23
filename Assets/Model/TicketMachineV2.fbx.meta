@@ -3,12 +3,7 @@ guid: eea5ad69b0f80d64585877f47204ce6d
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: TicketMachineV2
-    second: {fileID: 2100000, guid: 7edde0d3825329a45ba392e151821031, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
