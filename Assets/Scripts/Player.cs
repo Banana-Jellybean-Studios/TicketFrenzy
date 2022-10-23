@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 		public GameObject ticketMachine;
 		public List<GameObject> pathMouths;
 		public GameObject staminaBar;
+		public GameObject moneyEffectSpawnPos;
 		public int machineLevel;
 		public float moneyIncrease;
 		public List<TicketFlow> ticketPaths;
@@ -45,7 +46,6 @@ public class Player : MonoBehaviour
 	public ParticleSystem moneyEffect;
 	public TextMeshPro moneyTextEffect;
 	public ParticleSystem ticketEffect;
-	public GameObject moneyEffectSpawnPos;
 	public ParticleSystem smokeEffect;
 	public ParticleSystem fireEffect;
 
@@ -219,7 +219,7 @@ public class Player : MonoBehaviour
 		float moneyAmount = currentMachine.moneyIncrease * currentMoneyIncrease;
         money += moneyAmount;
 
-		Instantiate(moneyEffect, moneyEffectSpawnPos.transform.position, Quaternion.identity);
+		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, Quaternion.identity);
 		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "+" + moneyAmount.ToString();
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
