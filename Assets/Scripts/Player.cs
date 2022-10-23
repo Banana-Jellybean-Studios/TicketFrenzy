@@ -95,6 +95,11 @@ public class Player : MonoBehaviour
 	public Button staminaButton;
 	public Button machineButton;
 	public Button incomeButton;
+	public Color notInteractableColor;
+	public Color interactableColor;
+	public Image staminaImage;
+	public Image machineImage;
+	public Image incomeImage;
 
 	public static Player player { get; private set; }
 
@@ -194,14 +199,38 @@ public class Player : MonoBehaviour
 
 	private void UIButtons()
 	{
-		if (money >= currentStaminaLevelMoney) staminaButton.interactable = true;
-		else staminaButton.interactable = false;
+		if (money >= currentStaminaLevelMoney)
+		{
+			staminaButton.interactable = true;
+			staminaImage.color = interactableColor;
+		}
+		else
+		{
+			staminaButton.interactable = false;
+			staminaImage.color = notInteractableColor;
+		}
 
-		if (money >= currentIncomeLevelMoney) incomeButton.interactable = true;
-		else incomeButton.interactable = false;
+		if (money >= currentIncomeLevelMoney)
+		{
+			incomeButton.interactable = true;
+			incomeImage.color = interactableColor;
+		}
+		else
+		{
+			incomeButton.interactable = false;
+			incomeImage.color = notInteractableColor;
+		}
 
-		if (money >= currentMachineMoney && !IsMachineMaxLevel()) machineButton.interactable = true;
-		else machineButton.interactable = false;
+		if (money >= currentMachineMoney && !IsMachineMaxLevel())
+		{
+			machineButton.interactable = true;
+			machineImage.color = interactableColor;
+		}
+		else
+		{
+			machineButton.interactable = false;
+			machineImage.color = notInteractableColor;
+		}
 	}
 
 	public void PlayGame()
@@ -284,8 +313,8 @@ public class Player : MonoBehaviour
 
 		machineRenderer = currentMachine.ticketMachine.GetComponent<MeshRenderer>();
 
-		machineLevelText.text = (machineLevel).ToString();
-		
+		machineLevelText.text = (machineLevel + 1).ToString();
+
 		if (IsMachineMaxLevel())
 		{
 			machineButton.interactable = false;
@@ -370,11 +399,9 @@ public class Player : MonoBehaviour
 
 		staminaLevelText.text = (staminaLevel + 1).ToString();
 		incomeaLevelText.text = (incomeLevel + 1).ToString();
-		machineLevelText.text = (machineLevel + 1).ToString();
 
 		staminaMoneyText.text = (currentStaminaLevelMoney).ToString();
 		incomeMoneyText.text = (currentIncomeLevelMoney).ToString();
-		machineMoneyText.text = (currentMachineMoney).ToString();
 	}
 
     public void BuyStaminaUpgrade()
