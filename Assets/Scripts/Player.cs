@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 
 			if (currentStamina > 0)
 			{
-				currentStamina -= staminaRefullSpeed * Time.deltaTime;
+				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
 			}
 
 			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
@@ -166,7 +166,7 @@ public class Player : MonoBehaviour
 		{
 			if (currentStamina > 0)
 			{
-				currentStamina -= staminaRefullSpeed * Time.deltaTime;
+				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
 			}
 
 			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)

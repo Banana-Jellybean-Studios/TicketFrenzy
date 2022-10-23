@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.24305153, g: 0.31102178, b: 1.5868881, a: 1}
+  m_IndirectSpecularColor: {r: 0.15170889, g: 0.12722862, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2497,7 +2497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 7617d8bc0e91d804690b1abe00237386, type: 3}
   moneyTextEffectSpawnPos: {fileID: 1732665773}
   ticketEffectSpawnPos: {fileID: 797480494}
   ticketsParentObj: {fileID: 1603922117}
@@ -4410,7 +4410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 2bdbe5ae623f6cd4cba29805af8c9354, type: 3}
   moneyTextEffectSpawnPos: {fileID: 1560843834}
   ticketEffectSpawnPos: {fileID: 1458750018}
   ticketsParentObj: {fileID: 468149782}
@@ -5310,8 +5310,8 @@ MonoBehaviour:
   scaleXTarget: 1.05
   scaleYTarget: 1.05
   scaleZTarget: 1.2
-  normalScaleDuration: 0.25
-  hotScaleDuration: 0.1
+  normalScaleDuration: 0.15
+  hotScaleDuration: 0.07
   normalColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 0}
   hotColor: {r: 1, g: 0.3066038, b: 0.3066038, a: 0}
   colorChangeSpeed: 5
@@ -9177,7 +9177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 2bdbe5ae623f6cd4cba29805af8c9354, type: 3}
   moneyTextEffectSpawnPos: {fileID: 2009182898}
   ticketEffectSpawnPos: {fileID: 5791708}
   ticketsParentObj: {fileID: 2089244416}
@@ -10738,7 +10738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 7617d8bc0e91d804690b1abe00237386, type: 3}
   moneyTextEffectSpawnPos: {fileID: 1539781499}
   ticketEffectSpawnPos: {fileID: 217090503}
   ticketsParentObj: {fileID: 2082137078}
@@ -13574,7 +13574,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 2bdbe5ae623f6cd4cba29805af8c9354, type: 3}
   moneyTextEffectSpawnPos: {fileID: 2110223814}
   ticketEffectSpawnPos: {fileID: 1774131630}
   ticketsParentObj: {fileID: 704664680}
@@ -13861,6 +13861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prototypeList:
   - {fileID: 11400000, guid: 5a14b6a76b9f7364a9abf76a513b916d, type: 2}
+  - {fileID: 11400000, guid: f7234678c6addd54daf86a967aee17ca, type: 2}
+  - {fileID: 11400000, guid: 955d0dea11ebf3348bb6f682502f62ea, type: 2}
   autoSelectCamera: 1
   cameraData:
     mainCamera: {fileID: 963194227}
@@ -13891,8 +13893,14 @@ MonoBehaviour:
   registeredPrefabs:
   - prefabPrototype: {fileID: 11400000, guid: 5a14b6a76b9f7364a9abf76a513b916d, type: 2}
     registeredPrefabs: []
+  - prefabPrototype: {fileID: 11400000, guid: f7234678c6addd54daf86a967aee17ca, type: 2}
+    registeredPrefabs: []
+  - prefabPrototype: {fileID: 11400000, guid: 955d0dea11ebf3348bb6f682502f62ea, type: 2}
+    registeredPrefabs: []
   prefabList:
   - {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  - {fileID: 9149648780978980107, guid: 7617d8bc0e91d804690b1abe00237386, type: 3}
+  - {fileID: 9149648780978980107, guid: 2bdbe5ae623f6cd4cba29805af8c9354, type: 3}
   enableMROnManagerDisable: 1
   enableMROnRemoveInstance: 1
 --- !u!4 &1573442639
@@ -15376,7 +15384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFlowing: 0
-  prefab: {fileID: 9149648780978980107, guid: b98a03d184456e545972e4927a1fe444, type: 3}
+  prefab: {fileID: 9149648780978980107, guid: 7617d8bc0e91d804690b1abe00237386, type: 3}
   moneyTextEffectSpawnPos: {fileID: 560550342}
   ticketEffectSpawnPos: {fileID: 1494462434}
   ticketsParentObj: {fileID: 2083286859}
