@@ -8,6 +8,7 @@ public class TicketFlow : MonoBehaviour
 {
 	public bool isFlowing = false;
 	public GameObject prefab;
+	public GameObject moneyTextEffectSpawnPos;
 	public GameObject ticketEffectSpawnPos;
 	public GameObject ticketsParentObj;
 	public float flowSpeed = 1;
@@ -55,7 +56,7 @@ public class TicketFlow : MonoBehaviour
 		if (ticketInMachineDistance > distanceTickets)
 		{
 			ticketInMachineDistance = 0;
-			player.OnTicketInMachine(ticketEffectSpawnPos.transform.position);
+			player.OnTicketInMachine(ticketEffectSpawnPos.transform.position, moneyTextEffectSpawnPos.transform.position);
 		}
 	}
 }

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 		public List<GameObject> pathMouths;
 		public GameObject staminaBar;
 		public int machineLevel;
+		public float moneyIncrease;
 		public List<TicketFlow> ticketPaths;
 	}
 
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
 
 	[Header("Effects")]
 	public ParticleSystem moneyEffect;
+	public TextMeshPro moneyTextEffect;
 	public ParticleSystem ticketEffect;
 	public GameObject moneyEffectSpawnPos;
 	public ParticleSystem smokeEffect;
@@ -212,11 +214,12 @@ public class Player : MonoBehaviour
 		}
 	}
 
-    public void OnTicketInMachine(Vector3 TicketEffectPos)
+    public void OnTicketInMachine(Vector3 TicketEffectPos, Vector3 moneyTextEffectPos)
     {
-        money += currentMoneyIncrease;
+        money += currentMachine.moneyIncrease;
 
 		Instantiate(moneyEffect, moneyEffectSpawnPos.transform.position, Quaternion.identity);
+		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.identity);
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
 		if (canScaleChange)
