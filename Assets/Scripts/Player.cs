@@ -315,6 +315,13 @@ public class Player : MonoBehaviour
 
 		machineLevelText.text = (machineLevel + 1).ToString();
 
+		currentMachineMoney = 0;
+
+		for (int i = 0; i < machineLevel + 1; i++)
+		{
+			currentMachineMoney += (machineLevel + 1) * machineMoneyByLevel;
+		}
+
 		if (IsMachineMaxLevel())
 		{
 			machineButton.interactable = false;
@@ -379,7 +386,6 @@ public class Player : MonoBehaviour
         currentMoneyIncrease = incomeLevel * incomeIncreaseByLevel + incomeIncreaseByLevel;
 
 		currentStaminaLevelMoney = 0;
-		currentMachineMoney = 0;
 		currentIncomeLevelMoney = 0;
 
 		for (int i = 0; i < staminaLevel + 1; i++)
@@ -390,11 +396,6 @@ public class Player : MonoBehaviour
 		for (int i = 0; i < incomeLevel + 1; i++)
 		{
 			currentIncomeLevelMoney += (incomeLevel + 1) * incomeMoneyByLevel;
-		}
-
-		for (int i = 0; i < machineLevel + 1; i++)
-		{
-			currentMachineMoney += (machineLevel + 1) * machineMoneyByLevel;
 		}
 
 		staminaLevelText.text = (staminaLevel + 1).ToString();
