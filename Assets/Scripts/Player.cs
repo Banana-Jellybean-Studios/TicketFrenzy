@@ -92,7 +92,9 @@ public class Player : MonoBehaviour
 	public TextMeshProUGUI incomeaLevelText;
 	public TextMeshProUGUI machineLevelText;
 	public Slider staminaSlider;
+	public Button staminaButton;
 	public Button machineButton;
+	public Button incomeButton;
 
 	public static Player player { get; private set; }
 
@@ -186,6 +188,20 @@ public class Player : MonoBehaviour
 		currentMachine.staminaBar.GetComponent<MeshRenderer>().materials[1].SetFloat("_ProgressBorder", staminaSlider.value * 0.525f);
 		targetGroup.m_Targets[0].weight = 1 - staminaSlider.value;
 		targetGroup.m_Targets[1].weight = staminaSlider.value;
+
+		UIButtons();
+	}
+
+	private void UIButtons()
+	{
+		if (money >= currentStaminaLevelMoney) staminaButton.interactable = true;
+		else staminaButton.interactable = false;
+
+		if (money >= currentIncomeLevelMoney) incomeButton.interactable = true;
+		else incomeButton.interactable = false;
+
+		if (money >= currentMachineMoney && !IsMachineMaxLevel()) machineButton.interactable = true;
+		else machineButton.interactable = false;
 	}
 
 	public void PlayGame()
@@ -235,8 +251,6 @@ public class Player : MonoBehaviour
 
 	private void CheckMachine()
 	{
-		currentMachineMoney = machineLevel * machineMoneyByLevel + machineMoneyByLevel;
-
 		for (int i = 0; i < ticketMachines.Count; i++)
 		{
 			if (machineLevel >= ticketMachines[i].machineLevel)
@@ -282,6 +296,8 @@ public class Player : MonoBehaviour
 			machineButton.interactable = true;
 			machineMoneyText.text = (currentMachineMoney).ToString();
 		}
+
+		CheckLevels();
 	}
 
 	private void CheckPaths()
@@ -333,9 +349,24 @@ public class Player : MonoBehaviour
 		currentMaxStamina = staminaLevel * staminaIncreaseByLevel + staminaIncreaseByLevel * 10;
         currentMoneyIncrease = incomeLevel * incomeIncreaseByLevel + incomeIncreaseByLevel;
 
-        currentStaminaLevelMoney = (staminaLevel + 1) * staminaMoneyByLevel;
-		currentIncomeLevelMoney = (incomeLevel + 1) * incomeMoneyByLevel;
-		currentMachineMoney = (machineLevel + 1) * machineMoneyByLevel;
+		currentStaminaLevelMoney = 0;
+		currentMachineMoney = 0;
+		currentIncomeLevelMoney = 0;
+
+		for (int i = 0; i < staminaLevel + 1; i++)
+		{
+			currentStaminaLevelMoney += (staminaLevel + 1) * staminaMoneyByLevel;
+		}
+
+		for (int i = 0; i < incomeLevel + 1; i++)
+		{
+			currentIncomeLevelMoney += (incomeLevel + 1) * incomeMoneyByLevel;
+		}
+
+		for (int i = 0; i < machineLevel + 1; i++)
+		{
+			currentMachineMoney += (machineLevel + 1) * machineMoneyByLevel;
+		}
 
 		staminaLevelText.text = (staminaLevel + 1).ToString();
 		incomeaLevelText.text = (incomeLevel + 1).ToString();
