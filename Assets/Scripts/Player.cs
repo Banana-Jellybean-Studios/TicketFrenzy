@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 	private float scaleDuration = 0.1f;
 	private bool canScaleChange = true;
 	private TicketMachine currentMachine;
+	private TicketMachine lastMachine;
 	private MeshRenderer machineRenderer;
 	private GameObject currentstaminaBar;
 
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
 	public Image staminaImage;
 	public Image machineImage;
 	public Image incomeImage;
+	public GameObject newMachinePanel;
 
 	public static Player player { get; private set; }
 
@@ -111,7 +113,8 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         if(player == null) player = this;
-    }
+		newMachinePanel.SetActive(false);
+	}
 
     private void Start()
     {
@@ -120,6 +123,16 @@ public class Player : MonoBehaviour
 		machineLevel = 0;
 
 		Load();
+
+		for (int i = 0; i < ticketMachines.Count; i++)
+		{
+			if (machineLevel >= ticketMachines[i].machineLevel)
+			{
+				currentMachine = ticketMachines[i];
+				lastMachine = currentMachine;
+			}
+			else break;
+		}
 
 		CheckLevels();
 		CheckMachine();
@@ -233,6 +246,11 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	public void NewMachinePanelClose()
+	{
+		newMachinePanel.SetActive(false);
+	}
+
 	public void PlayGame()
 	{
 		isPlay = true;
@@ -287,6 +305,12 @@ public class Player : MonoBehaviour
 				currentMachine = ticketMachines[i];
 			}
 			else break;
+		}
+
+		if (lastMachine.ticketMachine != currentMachine.ticketMachine)
+		{
+			newMachinePanel.SetActive(true);
+			lastMachine = currentMachine;
 		}
 
 		for (int i = 0; i < ticketMachines.Count; i++)
