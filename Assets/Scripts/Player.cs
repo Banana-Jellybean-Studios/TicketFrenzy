@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Cinemachine;
 using System;
+using MoreMountains.NiceVibrations;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
 	}
 
 	public CinemachineTargetGroup targetGroup;
+	public bool isVibrate = true;
 
 	[Header("Ticket Machine")]
 	public List<TicketMachine> ticketMachines;
@@ -102,6 +104,9 @@ public class Player : MonoBehaviour
 	public Image machineImage;
 	public Image incomeImage;
 	public GameObject newMachinePanel;
+	public float newMachinePanelDuration;
+	public Ease newMachinePanelEase;
+	public GameObject holdImage;
 
 	public static Player player { get; private set; }
 
@@ -114,6 +119,7 @@ public class Player : MonoBehaviour
     {
         if(player == null) player = this;
 		newMachinePanel.SetActive(false);
+		holdImage.SetActive(true);
 	}
 
     private void Start()
@@ -153,6 +159,7 @@ public class Player : MonoBehaviour
 				canTouch = false;
 				isPlay = false;
 				Save();
+				Vibrate();
 			}
 
 			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
@@ -248,12 +255,21 @@ public class Player : MonoBehaviour
 
 	public void NewMachinePanelClose()
 	{
+		StartCoroutine(NewMachinePanelCloseNum());
+	}
+
+	private IEnumerator NewMachinePanelCloseNum()
+	{
+		newMachinePanel.transform.DOScale(0.001f, newMachinePanelDuration).SetEase(newMachinePanelEase);
+		yield return new WaitForSeconds(newMachinePanelDuration);
 		newMachinePanel.SetActive(false);
 	}
 
 	public void PlayGame()
 	{
+		holdImage.SetActive(false);
 		isPlay = true;
+		Vibrate();
 	}
 
 	private void MachineEffects()
@@ -309,8 +325,12 @@ public class Player : MonoBehaviour
 
 		if (lastMachine.ticketMachine != currentMachine.ticketMachine)
 		{
+			Vector3 targetScale = newMachinePanel.transform.localScale;
+			newMachinePanel.transform.localScale = Vector3.one * 0.001f;
 			newMachinePanel.SetActive(true);
+			newMachinePanel.transform.DOScale(1, newMachinePanelDuration).SetEase(newMachinePanelEase);
 			lastMachine = currentMachine;
+			Vibrate();
 		}
 
 		for (int i = 0; i < ticketMachines.Count; i++)
@@ -435,6 +455,7 @@ public class Player : MonoBehaviour
         {
             staminaLevel++;
             money -= currentStaminaLevelMoney;
+			Vibrate();
             CheckLevels();
         }
 		Save();
@@ -446,6 +467,7 @@ public class Player : MonoBehaviour
 		{
 			incomeLevel++;
 			money -= currentIncomeLevelMoney;
+			Vibrate();
 			CheckLevels();
 		}
 		Save();
@@ -457,6 +479,7 @@ public class Player : MonoBehaviour
 		{
 			machineLevel++;
 			money -= currentMachineMoney;
+			Vibrate();
 			CheckMachine();
 		}
 		Save();
@@ -492,6 +515,15 @@ public class Player : MonoBehaviour
 		if (PlayerPrefs.HasKey("StaminaLevel")) staminaLevel = PlayerPrefs.GetInt("StaminaLevel");
 		if (PlayerPrefs.HasKey("IncomeLevel")) incomeLevel = PlayerPrefs.GetInt("IncomeLevel");
 		if (PlayerPrefs.HasKey("MachineLevel")) machineLevel = PlayerPrefs.GetInt("MachineLevel");
+	}
+
+	public void Vibrate()
+	{
+		if (!isVibrate) return;
+
+		MMVibrationManager.StopAllHaptics();
+
+		MMVibrationManager.TransientHaptic(0.85f, 0.05f, true, this);
 	}
 
 	[ContextMenu("Reset Save")]

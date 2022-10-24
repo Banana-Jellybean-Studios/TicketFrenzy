@@ -696,7 +696,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Android: GPU_INSTANCER
+    Android: GPU_INSTANCER;MOREMOUNTAINS_NICEVIBRATIONS
     Standalone: GPU_INSTANCER
   additionalCompilerArguments: {}
   platformArchitecture: {}
