@@ -264,7 +264,7 @@ public class Player : MonoBehaviour
 		float moneyAmount = currentMachine.moneyIncrease * currentMoneyIncrease;
         money += moneyAmount;
 
-		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, Quaternion.identity);
+		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, currentMachine.moneyEffectSpawnPos.transform.rotation);
 		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "+" + moneyAmount.ToString();
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
