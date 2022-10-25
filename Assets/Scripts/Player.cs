@@ -23,7 +23,11 @@ public class Player : MonoBehaviour
 	}
 
 	public CinemachineTargetGroup targetGroup;
+	public CinemachineVirtualCamera inGameCamCont;
+	public CinemachineVirtualCamera startCamCont;
 	public bool isVibrate = true;
+
+	private bool isStarted = false;
 
 	[Header("Ticket Machine")]
 	public List<TicketMachine> ticketMachines;
@@ -120,6 +124,9 @@ public class Player : MonoBehaviour
         if(player == null) player = this;
 		newMachinePanel.SetActive(false);
 		holdImage.SetActive(true);
+		isStarted = false;
+		inGameCamCont.gameObject.SetActive(false);
+		startCamCont.gameObject.SetActive(true);
 	}
 
     private void Start()
@@ -267,6 +274,12 @@ public class Player : MonoBehaviour
 
 	public void PlayGame()
 	{
+		if (!isStarted)
+		{
+			isStarted = true;
+			inGameCamCont.gameObject.SetActive(true);
+			startCamCont.gameObject.SetActive(false);
+		}
 		holdImage.SetActive(false);
 		isPlay = true;
 		Vibrate();
@@ -299,7 +312,7 @@ public class Player : MonoBehaviour
         money += moneyAmount;
 
 		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, currentMachine.moneyEffectSpawnPos.transform.rotation);
-		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "+" + moneyAmount.ToString();
+		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "$" + moneyAmount.ToString();
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
 		if (canScaleChange)
