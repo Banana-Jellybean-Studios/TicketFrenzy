@@ -112,6 +112,17 @@ public class Player : MonoBehaviour
 	public Ease newMachinePanelEase;
 	public GameObject holdImage;
 
+	public void addMoney(int moneyToAdd)
+	{
+        if (money >= 0)
+        {
+            money += moneyToAdd;
+            Vibrate();
+            CheckLevels();
+        }
+        Save();
+	}
+
 	public static Player player { get; private set; }
 
 	private bool IsMachineMaxLevel()
