@@ -7,6 +7,7 @@ using DG.Tweening;
 using Cinemachine;
 using System;
 using MoreMountains.NiceVibrations;
+using System.Web.Razor.Generator;
 
 public class Player : MonoBehaviour
 {
@@ -88,9 +89,10 @@ public class Player : MonoBehaviour
 	private float currentMachineMoney = 50;
 
 	[Header("Ticket Paths")]
-	public float flowSpeed = 5;
+	public float fastFlowSpeed = 5;
+	public float slowFlowSpeed = 2;
 
-    [Header("UI")]
+	[Header("UI")]
     public TextMeshProUGUI moneyText;
 	public TextMeshProUGUI staminaMoneyText;
 	public TextMeshProUGUI incomeMoneyText;
@@ -182,7 +184,7 @@ public class Player : MonoBehaviour
 
 			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
             {
-				currentMachine.ticketPaths[i].flowSpeed = flowSpeed;
+				currentMachine.ticketPaths[i].flowSpeed = fastFlowSpeed;
             }
 
 			CloseButtons();
@@ -198,12 +200,22 @@ public class Player : MonoBehaviour
 			{
 				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
 			}
-
-			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+			
+			if (isStarted)
 			{
-				currentMachine.ticketPaths[i].flowSpeed = 0;
+				for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+				{
+					currentMachine.ticketPaths[i].flowSpeed = slowFlowSpeed;
+				}
 			}
-
+			else
+			{
+				for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+				{
+					currentMachine.ticketPaths[i].flowSpeed = 0;
+				}
+			}
+			
 			OpenButtons();
 			isPlay = false;
 		}
@@ -214,9 +226,19 @@ public class Player : MonoBehaviour
 				currentStamina -= staminaRefullSpeed * (currentMaxStamina / 100) * Time.deltaTime;
 			}
 
-			for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+			if (isStarted)
 			{
-				currentMachine.ticketPaths[i].flowSpeed = 0;
+				for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+				{
+					currentMachine.ticketPaths[i].flowSpeed = slowFlowSpeed;
+				}
+			}
+			else
+			{
+				for (int i = 0; i < currentMachine.ticketPaths.Count; i++)
+				{
+					currentMachine.ticketPaths[i].flowSpeed = 0;
+				}
 			}
 		}
 
@@ -319,8 +341,12 @@ public class Player : MonoBehaviour
 
     public void OnTicketInMachine(Vector3 TicketEffectPos, Vector3 moneyTextEffectPos)
     {
-		float moneyAmount = currentMachine.moneyIncrease * currentMoneyIncrease;
-        money += moneyAmount;
+		float moneyAmount = 0;
+
+		if (isPlay) moneyAmount = currentMachine.moneyIncrease * currentMoneyIncrease;
+		else moneyAmount = (currentMachine.moneyIncrease * currentMoneyIncrease) * 0.6f;
+
+		money += moneyAmount;
 
 		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, currentMachine.moneyEffectSpawnPos.transform.rotation);
 		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "$" + moneyAmount.ToString();
