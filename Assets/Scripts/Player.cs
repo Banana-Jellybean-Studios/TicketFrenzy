@@ -114,6 +114,11 @@ public class Player : MonoBehaviour
 	public Ease newMachinePanelEase;
 	public GameObject holdImage;
 
+	private float TextedMoney(float money)
+	{
+		return (float)Math.Round((decimal)money, 2);
+	}
+
 	public void addMoney(int moneyToAdd)
 	{
         if (money >= 0)
@@ -246,7 +251,7 @@ public class Player : MonoBehaviour
 
 		MachineEffects();
 
-		moneyText.text = money.ToString();
+		moneyText.text = TextedMoney(money).ToString();
 		staminaSlider.value = currentStamina / currentMaxStamina;
 		machineRenderer.material.color = Color.Lerp(machineRenderer.material.color, Color.Lerp(normalColor, hotColor, staminaSlider.value), colorChangeSpeed * Time.deltaTime);
 		scaleDuration = Mathf.Lerp(normalScaleDuration, hotScaleDuration, staminaSlider.value);
@@ -349,7 +354,7 @@ public class Player : MonoBehaviour
 		money += moneyAmount;
 
 		Instantiate(moneyEffect, currentMachine.moneyEffectSpawnPos.transform.position, currentMachine.moneyEffectSpawnPos.transform.rotation);
-		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "$" + moneyAmount.ToString();
+		Instantiate(moneyTextEffect, moneyTextEffectPos, Quaternion.Euler(0, -90, 0)).text = "$" + TextedMoney(moneyAmount).ToString();
 		Instantiate(ticketEffect, TicketEffectPos, Quaternion.identity);
 
 		if (canScaleChange)
