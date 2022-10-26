@@ -1,4 +1,20 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "Game Package Registry by Google", 
+      "url": "https://unityregistry-pa.googleapis.com/", 
+      "scopes": [ 
+        "com.google" 
+      ]
+    },
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.gameanalytics"
+      ]
+    }
+  ],
   "dependencies": {
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.adaptiveperformance": "3.0.3",
