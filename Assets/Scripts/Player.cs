@@ -7,7 +7,9 @@ using DG.Tweening;
 using Cinemachine;
 using System;
 using MoreMountains.NiceVibrations;
-using System.Web.Razor.Generator;
+using Facebook.Unity;
+using GameAnalyticsSDK;
+//using System.Web.Razor.Generator;
 
 public class Player : MonoBehaviour
 {
@@ -145,7 +147,24 @@ public class Player : MonoBehaviour
 		isStarted = false;
 		inGameCamCont.gameObject.SetActive(false);
 		startCamCont.gameObject.SetActive(true);
-	}
+        GameAnalytics.Initialize();
+
+        if (FB.IsInitialized) // Fb sdk initilaze
+            FB.ActivateApp();
+        else
+            FB.Init(() => { FB.ActivateApp(); });
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (!pauseStatus)
+        {
+            if (FB.IsInitialized)
+                FB.ActivateApp();
+            else
+                FB.Init(() => { FB.ActivateApp(); });
+        }
+    }
 
     private void Start()
     {

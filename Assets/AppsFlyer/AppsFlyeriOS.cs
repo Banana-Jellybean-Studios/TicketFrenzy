@@ -1,48 +1,27 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using System.Reflection;
-
-
 
 namespace AppsFlyerSDK
 {
-
-#if UNITY_IOS || UNITY_STANDALONE_OSX
-
-    public class AppsFlyeriOS: IAppsFlyerIOSBridge
-    {
-        public bool isInit { get; set;  }
-
-        public AppsFlyeriOS() { }
-
-        public AppsFlyeriOS(string devKey, string appID, MonoBehaviour gameObject)
-        {
-            setAppsFlyerDevKey(devKey);
-            setAppleAppID(appID);
-            if (gameObject != null)
-            {
 #if UNITY_IOS
-                getConversionData(gameObject.name);
-#elif UNITY_STANDALONE_OSX
-                getConversionData(gameObject.GetType().ToString());
-#endif
-            }
-        }
 
-
+    public class AppsFlyeriOS
+    {
 
         /// <summary>
         /// Start Session.
         /// This will record a session and then record all background forground sessions during the lifecycle of the app.
         /// </summary>
-public void startSDK(bool shouldCallback, string CallBackObjectName)
+        public static void startSDK()
         {
-#if UNITY_STANDALONE_OSX && !UNITY_EDITOR
-                _startSDK(shouldCallback, CallBackObjectName, getCallback);
-#elif UNITY_IOS && !UNITY_EDITOR
-                _startSDK(shouldCallback, CallBackObjectName); 
+                startSDK(false, AppsFlyer.CallBackObjectName);
+        }
+        
+        public static void startSDK(bool shouldCallback, string callBackObjectName)
+        {
+#if !UNITY_EDITOR
+                _startSDK(shouldCallback, callBackObjectName); 
 #endif
         }
 
@@ -52,12 +31,12 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// </summary>
         /// <param name="eventName">Name of event.</param>
         /// <param name="eventValues">Contains dictionary of values for handling by backend.</param>
-        public  void sendEvent(string eventName, Dictionary<string, string> eventValues)
+        public static void sendEvent(string eventName, Dictionary<string, string> eventValues)
         {
-            sendEvent(eventName, eventValues, false, AppsFlyer.CallBackObjectName);
+                sendEvent(eventName, eventValues, false, AppsFlyer.CallBackObjectName);
         }
         
-        public void sendEvent(string eventName, Dictionary<string, string> eventValues, bool shouldCallback, string callBackObjectName)
+        public static void sendEvent(string eventName, Dictionary<string, string> eventValues, bool shouldCallback, string callBackObjectName)
         {
 #if !UNITY_EDITOR
            _afSendEvent(eventName, AFMiniJSON.Json.Serialize(eventValues), shouldCallback, callBackObjectName);
@@ -70,7 +49,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// By doing this you can serve users with personalized content or send them to specific activities within the app,
         /// which can greatly enhance their engagement with your app.
         /// </summary>
-        public void getConversionData(string objectName)
+        public static void getConversionData(string objectName)
         {
 #if !UNITY_EDITOR
             _getConversionData(objectName);
@@ -82,7 +61,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Enables you to cross-reference your own unique ID with AppsFlyer’s unique ID and the other devices’ IDs.
         /// </summary>
         /// <param name="customerUserID">Customer ID for client.</param>
-        public void setCustomerUserId(string customerUserID)
+        public static void setCustomerUserID(string customerUserID)
         {
 #if !UNITY_EDITOR
             _setCustomerUserID(customerUserID);
@@ -94,7 +73,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// see [Setting additional custom data] (https://support.appsflyer.com/hc/en-us/articles/207032066-AppsFlyer-SDK-Integration-iOS#setting-additional-custom-data) for more information.
         /// </summary>
         /// <param name="customData">additional data Dictionary.</param>
-        public void setAdditionalData(Dictionary<string, string> customData)
+        public static void setAdditionalData(Dictionary<string, string> customData)
         {
 #if !UNITY_EDITOR
            _setAdditionalData(AFMiniJSON.Json.Serialize(customData));
@@ -105,7 +84,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         ///  Use this method to set your AppsFlyer's dev key.
         /// </summary>
         /// <param name="appsFlyerDevKey">AppsFlyer's Dev-Key, which is accessible from your AppsFlyer account under 'App Settings' in the dashboard.</param>
-        public void setAppsFlyerDevKey(string appsFlyerDevKey)
+        public static void setAppsFlyerDevKey(string appsFlyerDevKey)
         {
 #if !UNITY_EDITOR
            _setAppsFlyerDevKey(appsFlyerDevKey);
@@ -116,7 +95,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Use this method to set your app's Apple ID(taken from the app's page on iTunes Connect).
         /// </summary>
         /// <param name="appleAppID">your app's Apple ID.</param>
-        public void setAppleAppID(string appleAppID)
+        public static void setAppleAppID(string appleAppID)
         {
 #if !UNITY_EDITOR
            _setAppleAppID(appleAppID);
@@ -129,7 +108,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// You can set the currency code for all events by calling the following method.
         /// </summary>
         /// <param name="currencyCode">3 character ISO 4217 code.</param>
-        public void setCurrencyCode(string currencyCode)
+        public static void setCurrencyCode(string currencyCode)
         {
 #if !UNITY_EDITOR
            _setCurrencyCode(currencyCode);
@@ -141,7 +120,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// You can disable this behavior by setting the following property to true.
         /// </summary>
         /// <param name="disableCollectAppleAdSupport">boolean to disableCollectAppleAdSupport</param>
-        public void setDisableCollectAppleAdSupport(bool disableCollectAppleAdSupport)
+        public static void setDisableCollectAppleAdSupport(bool disableCollectAppleAdSupport)
         {
 #if !UNITY_EDITOR
            _setDisableCollectAppleAdSupport(disableCollectAppleAdSupport);
@@ -154,7 +133,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// The default value is false.
         /// </summary>
         /// <param name="isDebug">shouldEnable boolean..</param>
-        public void setIsDebug(bool isDebug)
+        public static void setIsDebug(bool isDebug)
         {
 #if !UNITY_EDITOR
            _setIsDebug(isDebug);
@@ -165,8 +144,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Set this flag to true, to collect the current device name(e.g. "My iPhone"). Default value is false.
         /// </summary>
         /// <param name="shouldCollectDeviceName">boolean shouldCollectDeviceName.</param>
-         [System.Obsolete("This is deprecated")]
-        public void setShouldCollectDeviceName(bool shouldCollectDeviceName)
+        public static void setShouldCollectDeviceName(bool shouldCollectDeviceName)
         {
 #if !UNITY_EDITOR
             _setShouldCollectDeviceName(shouldCollectDeviceName);
@@ -178,7 +156,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// The link that is generated for the user invite will use this OneLink as the base link.
         /// </summary>
         /// <param name="appInviteOneLinkID">OneLink ID obtained from the AppsFlyer Dashboard.</param>
-        public void setAppInviteOneLinkID(string appInviteOneLinkID)
+        public static void setAppInviteOneLinkID(string appInviteOneLinkID)
         {
 #if !UNITY_EDITOR
             _setAppInviteOneLinkID(appInviteOneLinkID);
@@ -191,7 +169,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Default is false
         /// </summary>
         /// <param name="shouldAnonymizeUser">boolean shouldAnonymizeUser.</param>
-        public void anonymizeUser(bool shouldAnonymizeUser)
+        public static void anonymizeUser(bool shouldAnonymizeUser)
         {
 #if !UNITY_EDITOR
            _anonymizeUser(shouldAnonymizeUser);
@@ -202,7 +180,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Opt-out for Apple Search Ads attributions.
         /// </summary>
         /// <param name="disableCollectIAd">boolean disableCollectIAd.</param>
-        public void setDisableCollectIAd(bool disableCollectIAd)
+        public static void setDisableCollectIAd(bool disableCollectIAd)
         {
 #if !UNITY_EDITOR
            _setDisableCollectIAd(disableCollectIAd);
@@ -213,7 +191,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// In app purchase receipt validation Apple environment(production or sandbox). The default value is false.
         /// </summary>
         /// <param name="useReceiptValidationSandbox">boolean useReceiptValidationSandbox.</param>
-        public void setUseReceiptValidationSandbox(bool useReceiptValidationSandbox)
+        public static void setUseReceiptValidationSandbox(bool useReceiptValidationSandbox)
         {
 #if !UNITY_EDITOR
             _setUseReceiptValidationSandbox(useReceiptValidationSandbox);
@@ -224,7 +202,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Set this flag to test uninstall on Apple environment(production or sandbox). The default value is false.
         /// </summary>
         /// <param name="useUninstallSandbox">boolean useUninstallSandbox.</param>
-        public void setUseUninstallSandbox(bool useUninstallSandbox)
+        public static void setUseUninstallSandbox(bool useUninstallSandbox)
         {
 #if !UNITY_EDITOR
            _setUseUninstallSandbox(useUninstallSandbox);
@@ -236,7 +214,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// An advertiser will be able to deeplink from a OneLink wrapped within another Universal Link and also record this retargeting conversion.
         /// </summary>
         /// <param name="resolveDeepLinkURLs">Array of urls.</param>
-        public void setResolveDeepLinkURLs(params string[] resolveDeepLinkURLs)
+        public static void setResolveDeepLinkURLs(params string[] resolveDeepLinkURLs)
         {
 #if !UNITY_EDITOR
            _setResolveDeepLinkURLs(resolveDeepLinkURLs.Length,resolveDeepLinkURLs);
@@ -247,7 +225,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// For advertisers who use vanity OneLinks.
         /// </summary>
         /// <param name="oneLinkCustomDomains">Array of domains.</param>
-        public void setOneLinkCustomDomain(params string[] oneLinkCustomDomains)
+        public static void setOneLinkCustomDomains(params string[] oneLinkCustomDomains)
         {
 #if !UNITY_EDITOR
             _setOneLinkCustomDomains(oneLinkCustomDomains.Length, oneLinkCustomDomains);
@@ -264,12 +242,11 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// </summary>
         /// <param name="cryptType">type Hash algoritm.</param>
         /// <param name="length">length of userEmails array.</param>
-        /// <param name="userEmails">userEmails The list of strings that hold mails.</param>}
-
-        public void setUserEmails(EmailCryptType cryptType, params string[] userEmails)
+        /// <param name="userEmails">userEmails The list of strings that hold mails.</param>
+        public static void setUserEmails(EmailCryptType cryptType, int length, params string[] userEmails)
         {
 #if !UNITY_EDITOR
-           _setUserEmails(cryptType, userEmails.Length, userEmails);
+           _setUserEmails(cryptType, length, userEmails);
 #endif
         }
 
@@ -277,7 +254,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Set the user phone number.
         /// </summary>
         /// <param name="phoneNumber">User phoneNumber.</param>
-        public void setPhoneNumber(string phoneNumber){
+        public static void setPhoneNumber(string phoneNumber){
 #if !UNITY_EDITOR
             _setPhoneNumber(phoneNumber);
 #endif
@@ -291,7 +268,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <param name="currency">The product currency.</param>
         /// <param name="tranactionId">The purchase transaction Id.</param>
         /// <param name="additionalParameters">The additional param, which you want to receive it in the raw reports.</param>
-        public void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
+        public static void validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, Dictionary<string, string> additionalParameters, MonoBehaviour gameObject)
         {
 #if !UNITY_EDITOR
             _validateAndSendInAppPurchase(productIdentifier, price, currency, tranactionId, AFMiniJSON.Json.Serialize(additionalParameters), gameObject ? gameObject.name : null);
@@ -303,7 +280,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// </summary>
         /// <param name="longitude">The location longitude.</param>
         /// <param name="latitude">The location latitude.</param>
-        public void recordLocation(double longitude, double latitude)
+        public static void recordLocation(double longitude, double latitude)
         {
 #if !UNITY_EDITOR
             _recordLocation(longitude, latitude);
@@ -313,7 +290,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <summary>
         /// Get AppsFlyer's unique device ID, which is created for every new install of an app.
         /// </summary>
-        public string getAppsFlyerId()
+        public static string getAppsFlyerId()
         {
 #if !UNITY_EDITOR
            return _getAppsFlyerId();
@@ -326,7 +303,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Register uninstall - you should register for remote notification and provide AppsFlyer the push device token.
         /// </summary>
         /// <param name="deviceToken">deviceToken The `deviceToken` from `-application:didRegisterForRemoteNotificationsWithDeviceToken:`.</param>
-        public void registerUninstall(byte[] deviceToken)
+        public static void registerUninstall(byte[] deviceToken)
         {
 #if !UNITY_EDITOR
            _registerUninstall(deviceToken);
@@ -337,7 +314,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Enable AppsFlyer to handle a push notification.
         /// </summary>
         /// <param name="pushPayload">pushPayload The `userInfo` from received remote notification. One of root keys should be @"af"..</param>
-        public void handlePushNotification(Dictionary<string, string> pushPayload)
+        public static void handlePushNotification(Dictionary<string, string> pushPayload)
         {
 #if !UNITY_EDITOR
            _handlePushNotification(AFMiniJSON.Json.Serialize(pushPayload));
@@ -347,7 +324,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <summary>
         /// Get SDK version.
         /// </summary>
-        public string getSdkVersion()
+        public static string getSDKVersion()
         {
 #if !UNITY_EDITOR
            return _getSDKVersion();
@@ -362,7 +339,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// </summary>
         /// <param name="host">Host Name.</param>
         /// <param name="host">Host prefix.</param>
-        public void setHost(string host, string hostPrefix)
+        public static void setHost(string host, string hostPrefix)
         {
 #if !UNITY_EDITOR
             _setHost(host, hostPrefix);
@@ -374,7 +351,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Default value is 5 seconds.
         /// </summary>
         /// <param name="minTimeBetweenSessions">minimum time between 2 separate sessions in seconds.</param>
-        public void setMinTimeBetweenSessions(int minTimeBetweenSessions)
+        public static void setMinTimeBetweenSessions(int minTimeBetweenSessions)
         {
 #if !UNITY_EDITOR
            _setMinTimeBetweenSessions(minTimeBetweenSessions);
@@ -387,7 +364,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// This can be achieved with the stopSDK API.
         /// </summary>
         /// <param name="isSDKStopped">boolean isSDKStopped.</param>
-        public void stopSDK(bool isSDKStopped)
+        public static void stopSDK(bool isSDKStopped)
         {
 #if !UNITY_EDITOR
             _stopSDK(isSDKStopped);
@@ -398,7 +375,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Was the stopSDK(boolean) API set to true.
         /// </summary>
         /// <returns>boolean isSDKStopped.</returns>
-        public bool isSDKStopped()
+        public static bool isSDKStopped()
         {
 #if !UNITY_EDITOR
            return _isSDKStopped();
@@ -415,7 +392,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <param name="url">The URL to be passed to your AppDelegate.</param>
         /// <param name="sourceApplication">The sourceApplication to be passed to your AppDelegate.</param>
         /// <param name="annotation">The annotation to be passed to your app delegate.</param>
-        public void handleOpenUrl(string url, string sourceApplication, string annotation)
+        public static void handleOpenUrl(string url, string sourceApplication, string annotation)
         {
 #if !UNITY_EDITOR
             _handleOpenUrl(url, sourceApplication, annotation);
@@ -425,7 +402,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <summary>
         /// Used by advertisers to exclude all networks/integrated partners from getting data.
         /// </summary>
-        public void setSharingFilterForAllPartners()
+        public static void setSharingFilterForAllPartners()
         {
 #if !UNITY_EDITOR
             _setSharingFilterForAllPartners();
@@ -436,21 +413,10 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Used by advertisers to set some (one or more) networks/integrated partners to exclude from getting data.
         /// </summary>
         /// <param name="partners">partners to exclude from getting data</param>
-        public void setSharingFilter(params string[] partners)
+        public static void setSharingFilter(params string[] partners)
         {
 #if !UNITY_EDITOR
             _setSharingFilter(partners.Length, partners);
-#endif
-        }
-
-
-        /// <summary>
-        /// Lets you configure how which partners should the SDK exclude from data-sharing.
-        /// <param name="partners">partners to exclude from getting data</param>
-        public static void setSharingFilterForPartners(params string[] partners)
-        {
-#if !UNITY_EDITOR
-            _setSharingFilterForPartners(partners.Length, partners);
 #endif
         }
 
@@ -461,7 +427,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <param name="appID">promoted App ID.</param>
         /// <param name="campaign">cross promotion campaign.</param>
         /// <param name="parameters">parameters Dictionary.</param>
-        public void recordCrossPromoteImpression(string appID, string campaign, Dictionary<string, string> parameters)
+        public static void recordCrossPromoteImpression(string appID, string campaign, Dictionary<string, string> parameters)
         {
 #if !UNITY_EDITOR
             _recordCrossPromoteImpression(appID, campaign, AFMiniJSON.Json.Serialize(parameters));
@@ -474,7 +440,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <param name="appID">promoted App ID</param>
         /// <param name="campaign">cross promotion campaign</param>
         /// <param name="parameters">additional user params</param>
-        public void attributeAndOpenStore(string appID, string campaign, Dictionary<string, string> parameters, MonoBehaviour gameObject)
+        public static void attributeAndOpenStore(string appID, string campaign, Dictionary<string, string> parameters, MonoBehaviour gameObject)
         {
 #if !UNITY_EDITOR
            _attributeAndOpenStore(appID, campaign, AFMiniJSON.Json.Serialize(parameters), gameObject ? gameObject.name : null);
@@ -486,7 +452,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// See - https://support.appsflyer.com/hc/en-us/articles/115004480866-User-invite-attribution-
         /// </summary>
         /// <param name="parameters">parameters Dictionary.</param>
-        public void generateUserInviteLink(Dictionary<string, string> parameters, MonoBehaviour gameObject)
+        public static void generateUserInviteLink(Dictionary<string, string> parameters, MonoBehaviour gameObject)
         {
 #if !UNITY_EDITOR
             _generateUserInviteLink(AFMiniJSON.Json.Serialize(parameters), gameObject ? gameObject.name : null);
@@ -499,7 +465,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// </summary>
         /// <param name="channel">channel string.</param>
         /// <param name="parameters">parameters Dictionary..</param>
-        public void recordInvite(string channel, Dictionary<string, string> parameters)
+        public static void recordInvite(string channel, Dictionary<string, string> parameters)
         {
 #if !UNITY_EDITOR
             _recordInvite(channel, AFMiniJSON.Json.Serialize(parameters));
@@ -510,17 +476,17 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// Waits for request user authorization to access app-related data
         /// </summary>
         /// <param name="timeoutInterval">time to wait until session starts</param>
-        public void waitForATTUserAuthorizationWithTimeoutInterval(int timeoutInterval)
+        public static void waitForATTUserAuthorizationWithTimeoutInterval(int timeoutInterval)
         {
 #if !UNITY_EDITOR
-             _waitForATTUserAuthorizationWithTimeoutInterval(timeoutInterval);
+            _waitForATTUserAuthorizationWithTimeoutInterval(timeoutInterval);
 #endif
         }
 
         /// <summary>
         /// </summary>
         /// <param name="isDisabled">bool should diable</param>
-        public void disableSKAdNetwork(bool isDisabled)
+        public static void disableSKAdNetwork(bool isDisabled)
         {
 #if !UNITY_EDITOR
             _disableSKAdNetwork(isDisabled);
@@ -533,7 +499,7 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// See docs for more info.
         /// </summary>
         /// <param name="paths">array of nested json path</param>
-        public void addPushNotificationDeepLinkPath(params string[] paths)
+        public static void addPushNotificationDeepLinkPath(params string[] paths)
         {
 #if !UNITY_EDITOR
             _addPushNotificationDeepLinkPath(paths.Length, paths);
@@ -543,359 +509,138 @@ public void startSDK(bool shouldCallback, string CallBackObjectName)
         /// <summary>
         /// subscribe to unified deep link callbacks
         /// </summary>
-        public void subscribeForDeepLink(string objectName){
+        public static void subscribeForDeepLink(string objectName){
 #if !UNITY_EDITOR
             _subscribeForDeepLink(objectName);
 #endif
         }
 
-           /// <summary>
-        /// Set the language of the device.
-        /// </summary>
-        public void setCurrentDeviceLanguage(string language){
-#if !UNITY_EDITOR
-            _setCurrentDeviceLanguage(language);
-#endif
-        }
-
-        /// <summary>
-        /// Allows sending custom data for partner integration purposes.
-        /// </summary>
-        public void setPartnerData(string partnerId, Dictionary<string, string> partnerInfo){
-#if !UNITY_EDITOR
-            _setPartnerData(partnerId, AFMiniJSON.Json.Serialize(partnerInfo));
-#endif
-        }
-
-        delegate void unityCallBack(string message);
-
-        [AOT.MonoPInvokeCallback(typeof(unityCallBack))]
-        public static void getCallback(string gameObjectName, string callbackName, string message)
-        {
-            GameObject go = GameObject.Find("AppsFlyerObject");
-            var afscript = go.GetComponent("AppsFlyerObjectScript") as AppsFlyerObjectScript;
-            Type type = typeof(AppsFlyerObjectScript);
-            MethodInfo info = type.GetMethod(callbackName);
-            info.Invoke(afscript, new[] { message });
-            
-        }
-
-
         /*
          * AppsFlyer ios method mapping
          */
 
-
-#if UNITY_IOS
-     [DllImport("__Internal")]
+        [DllImport("__Internal")]
         private static extern void _startSDK(bool shouldCallback, string objectName);
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-        private static extern void _startSDK(bool shouldCallback, string objectName, Action<string, string, string> getCallback);
 
-#endif
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _getConversionData(string objectName);
 
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setCustomerUserID(string customerUserID);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setAdditionalData(string customData);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setAppsFlyerDevKey(string appsFlyerDevKey);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setAppleAppID(string appleAppID);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setCurrencyCode(string currencyCode);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setDisableCollectAppleAdSupport(bool disableCollectAppleAdSupport);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setIsDebug(bool isDebug);
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+     
+        [DllImport("__Internal")]
         private static extern void _setShouldCollectDeviceName(bool shouldCollectDeviceName);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setAppInviteOneLinkID(string appInviteOneLinkID);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _anonymizeUser(bool shouldAnonymizeUser);
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+      
+        [DllImport("__Internal")]
         private static extern void _setDisableCollectIAd(bool disableCollectIAd);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setUseReceiptValidationSandbox(bool useReceiptValidationSandbox);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setUseUninstallSandbox(bool useUninstallSandbox);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setResolveDeepLinkURLs(int length, params string[] resolveDeepLinkURLs);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setOneLinkCustomDomains(int length, params string[] oneLinkCustomDomains);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setUserEmails(EmailCryptType cryptType, int length, params string[] userEmails);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setPhoneNumber(string phoneNumber);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _afSendEvent(string eventName, string eventValues, bool shouldCallback, string objectName);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _validateAndSendInAppPurchase(string productIdentifier, string price, string currency, string tranactionId, string additionalParameters, string objectName);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _recordLocation(double longitude, double latitude);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern string _getAppsFlyerId();
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _registerUninstall(byte[] deviceToken);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _handlePushNotification(string pushPayload);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern string _getSDKVersion();
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setHost(string host, string hostPrefix);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setMinTimeBetweenSessions(int minTimeBetweenSessions);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _stopSDK(bool isStopSDK);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern bool _isSDKStopped();
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _handleOpenUrl(string url, string sourceApplication, string annotation);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setSharingFilterForAllPartners();
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _setSharingFilter(int length, params string[] partners);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
-        private static extern void _setSharingFilterForPartners(int length, params string[] partners);
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _recordCrossPromoteImpression(string appID, string campaign, string parameters);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _attributeAndOpenStore(string appID, string campaign, string parameters, string gameObject);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _generateUserInviteLink(string parameters, string gameObject);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _recordInvite(string channel, string parameters);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _waitForATTUserAuthorizationWithTimeoutInterval(int timeoutInterval);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _disableSKAdNetwork(bool isDisabled);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _addPushNotificationDeepLinkPath(int length, params string[] paths);
 
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
+        [DllImport("__Internal")]
         private static extern void _subscribeForDeepLink(string objectName);
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
-        private static extern void _setCurrentDeviceLanguage(string language);
-
-#if UNITY_IOS
-    [DllImport("__Internal")]
-#elif UNITY_STANDALONE_OSX
-        [DllImport("AppsFlyerBundle")]
-#endif
-        private static extern void _setPartnerData(string partnerId, string partnerInfo);
 
     }
 
