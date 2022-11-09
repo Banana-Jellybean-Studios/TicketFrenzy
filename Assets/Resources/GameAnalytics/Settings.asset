@@ -30,7 +30,7 @@ MonoBehaviour:
   secretKey:
   - c044c0130662546c19130ccfa08fe68f99fd98c9
   Build:
-  - 1.1.0
+  - 0.1
   SelectedPlatformOrganization:
   - 
   SelectedPlatformStudio:
@@ -44,11 +44,11 @@ MonoBehaviour:
   NewVersion: 
   Changes: 
   SignUpOpen: 1
-  StudioName: Game Factory
-  GameName: Ticket Frenzy
+  StudioName: 
+  GameName: 
   OrganizationName: 
   OrganizationIdentifier: 
-  EmailGA: 
+  EmailGA: bjstudios1808@gmail.com
   IntroScreen: 0
   InfoLogEditor: 1
   InfoLogBuild: 1
